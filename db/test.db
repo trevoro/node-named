@@ -1,0 +1,44 @@
+{
+	"_domains": [
+	  "joyent.dev"
+	],
+	"joyent.dev": {
+    "soa": {
+    	"domain": "joyent.dev",
+      "host": "ns1.lab.joyent.dev",
+      "admin": "hostmaster.joyent.com",
+      "serial": 201202160000,
+      "refresh": 43200,
+      "retry": 86400,
+      "expire": 2419200,
+      "ttl": 604800
+    },
+    "ns": [ 
+      [ "ns1.lab.joyent.dev", 5 ]
+    ],
+    "txt": [ "some text goes here", 600 ],
+    "srv": {
+      "_tcp": {
+        "_sip": [ "sip.lab.joyent.dev", 600, 0, 10, 5060 ]
+      }
+    },
+    "mx": [
+      [ "smtp.lab.joyeny.dev", 600, 10 ]
+    ],
+    "hosts": {
+      "ns1": [ 
+        [ "A", "10.2.0.2", 5 ]
+      ],
+      "www": [
+        [ "CNAME", "ns1", 5 ]
+      ],
+      "bh1-www0": [ 
+        [ "A", "10.2.0.2", 5 ],
+        [ "AAAA", "::1", 20 ]
+      ],
+      "labwww": [ 
+        [ "CNAME", "bh1-www0", 10 ]
+      ]
+    }
+  }
+}

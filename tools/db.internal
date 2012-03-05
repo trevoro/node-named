@@ -1,0 +1,75 @@
+; BIND db for joyent.dev (the lab dns TLD)
+$TTL 604800
+
+@ IN  SOA ns1.lab.joyent.dev. dnsadmin.lab.joyent.dev. (
+                    201202160000 ; serial
+                    43200        ; refresh, seconds
+                    86400        ; retry, seconds
+                    2419200      ; expire, seconds
+                    604800       ; minimum, seconds
+                          )
+
+      IN  NS    ns1.lab.joyent.dev.
+      IN  A     10.2.0.2
+
+$ORIGIN lab.joyent.dev.
+ns1           IN  A     10.2.0.2
+bh1-www0      IN  A     10.2.0.2
+bh1-dhcp0     IN  A     10.2.0.3
+lab-www-00    IN  CNAME bh1-www0
+labwww        IN  CNAME bh1-www0
+bh1-gw0       IN  A     10.2.0.1
+bh1-cn0       IN  A     10.2.0.20
+bh1-cn1       IN  A     10.2.0.21
+bh1-mon0      IN  A     10.2.0.174
+bh1-auth0     IN  A     10.2.0.178
+bh1-vol0      IN  A     10.2.0.158
+bh1-stage0    IN  A     10.2.105.10
+bh1-stage1    IN  A     10.2.105.11
+bh1-stage2    IN  A     10.2.105.12
+bh1-stage3    IN  A     10.2.105.13
+bh1-stage4    IN  A     10.2.105.14
+bh1-stage5    IN  A     10.2.105.15
+bh1-kvm0      IN  A     10.2.200.2
+bh1-kvm0-i    IN  A     10.2.200.3
+bh1-kvm1      IN  A     10.2.201.2
+bh1-kvm1-i    IN  A     10.2.201.3
+bh1-kvm2      IN  A     10.2.202.2
+bh1-kvm2-i    IN  A     10.2.202.3
+bh1-kvm3      IN  A     10.2.203.2
+bh1-kvm3-i    IN  A     10.2.203.3
+bh1-kvm4      IN  A     10.2.204.2
+bh1-kvm4-i    IN  A     10.2.204.3
+bh1-kvm5      IN  A     10.2.205.2
+bh1-kvm5-i    IN  A     10.2.205.3
+bh1-kvm6      IN  A     10.2.206.2
+bh1-kvm6-i    IN  A     10.2.206.3
+bh1-kvm7      IN  A     10.2.207.2
+bh1-kvm7-i    IN  A     10.2.207.3
+bh1-kvm8      IN  A     10.2.208.2
+bh1-kvm8-i    IN  A     10.2.208.3
+bh1-kvm9      IN  A     10.2.209.2
+bh1-kvm9-i    IN  A     10.2.209.3
+bh1-kvm10     IN  A     10.2.210.2
+bh1-kvm10-i   IN  A     10.2.210.3
+bh1-kvm11     IN  A     10.2.211.2
+bh1-kvm11-i   IN  A     10.2.211.3
+bh1-kvm7-i    IN  A     10.2.207.3
+bh1-ca1       IN  A     10.2.0.220
+bh1-build0    IN  A     10.2.0.191
+bh1-build     IN  CNAME bh1-build0
+bh1-build1    IN  A     10.2.0.194
+bh1-build2    IN  A     10.2.0.197
+bh1-autobuild IN  A     10.2.0.190
+bh1-build3    IN  A     10.2.0.195
+bh1-con0      IN  A     10.2.0.17
+bh1-sw1       IN  A     10.2.0.11
+bh1-sw2       IN  A     10.2.0.12
+bh1-sw3       IN  A     10.2.0.13
+bh1-sw4       IN  A     10.2.0.14
+bh1-nightly   IN  A     10.2.0.160
+
+; rm is lazy
+rm-build      IN  A     10.2.0.130
+oi-build      IN  A     10.2.0.198
+jj-build      IN  A     10.2.0.134
