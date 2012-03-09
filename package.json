@@ -1,0 +1,17 @@
+{
+  "author": "trevoro <trevoro@gmail.com>",
+  "name": "namedjs",
+  "description": "DNS server",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/trevoro/node-namedjs.git"
+  },
+  "main": "lib/index.js",
+  "engines": {
+    "node": "0.6.*"
+  },
+  "dependencies": {
+    "bunyan": "0.6"
+  }
+}
