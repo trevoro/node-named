@@ -6,7 +6,7 @@
  * Add support for A, CNAME, SOA, MX, PTR, TXT and, SRV records
  * Add support for AXFR requests
  * Better logging
- * Figure out the storage database format
- * Write a simple database storage system
- * Support offsets for better message compression
- * Support multiple questions/ multiple answers
+ * Figure out the store format 
+ * Write a sample in-memory sample store 
+ * Support multiple questions 
+ * Support multiple answers 
