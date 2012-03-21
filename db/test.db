@@ -1,10 +1,10 @@
 {
-	"_domains": [
-	  "joyent.dev"
-	],
-	"joyent.dev": {
+  "_domains": [
+    "joyent.dev"
+  ],
+  "joyent.dev": {
     "soa": {
-    	"domain": "joyent.dev",
+      "domain": "joyent.dev",
       "host": "ns1.lab.joyent.dev",
       "admin": "hostmaster.joyent.com",
       "serial": 201202160000,
@@ -30,14 +30,14 @@
         [ "A", "10.2.0.2", 5 ]
       ],
       "www": [
-        [ "CNAME", "ns1", 5 ]
+        [ "CNAME", [ "ns1" ], 5 ]
       ],
       "bh1-www0": [ 
         [ "A", "10.2.0.2", 5 ],
         [ "AAAA", "::1", 20 ]
       ],
       "labwww": [ 
-        [ "CNAME", "bh1-www0", 10 ]
+        [ "CNAME", [ "bh1-www0" ], 10 ]
       ]
     }
   }
