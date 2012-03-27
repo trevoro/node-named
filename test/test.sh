@@ -1,8 +1,8 @@
 #!/bin/bash
 
-SERVER='127.0.0.1'
+SERVER='localhost'
 PORT=9999
-HOST='ns1.joyent.dev'
+HOST='ns1.relay.sh'
 DIGOPTS="+time=1 +short +retry=0"
 
 _fatal() {
@@ -29,7 +29,7 @@ fi
 
 # lookup a SOA record
 printf "[%s:%s] '%s' type: %s" $SERVER $PORT $HOST 'SOA'
-out=$(dig @$SERVER -p $PORT -t SOA joyent.dev $DIGOPTS)
+out=$(dig @$SERVER -p $PORT -t SOA relay.sh $DIGOPTS)
 if [[ $? -ne 0 ]] ; then
 	_fatal "record lookup failed"
 else
@@ -38,7 +38,7 @@ fi
 
 # lookup MX records
 printf "[%s:%s] '%s' type: %s" $SERVER $PORT $HOST 'MX'
-out=$(dig @$SERVER -p $PORT -t MX joyent.dev $DIGOPTS)
+out=$(dig @$SERVER -p $PORT -t MX relay.sh $DIGOPTS)
 if [[ $? -ne 0 ]] ; then
 	_fatal "record lookup failed"
 else
@@ -47,7 +47,16 @@ fi
 
 # lookup AAAA records
 printf "[%s:%s] '%s' type: %s" $SERVER $PORT $HOST 'AAAA'
-out=$(dig @$SERVER -p $PORT -t AAAA joyent.dev $DIGOPTS)
+out=$(dig @$SERVER -p $PORT -t AAAA relay.sh $DIGOPTS)
+if [[ $? -ne 0 ]] ; then
+	_fatal "record lookup failed"
+else
+	printf "%17s\n" "OK"
+fi
+
+# lookup SRV records
+printf "[%s:%s] '%s' type: %s" $SERVER $PORT "_sip._tcp.relay.sh" 'AAAA'
+out=$(dig @$SERVER -p $PORT -t SRV _sip._tcp.relay.sh $DIGOPTS)
 if [[ $? -ne 0 ]] ; then
 	_fatal "record lookup failed"
 else

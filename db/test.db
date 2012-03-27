@@ -1,11 +1,11 @@
 {
   "_domains": [
-    "joyent.dev"
+    "relay.sh"
   ],
-  "joyent.dev": {
+  "relay.sh": {
     "soa": {
-      "host": "ns1.lab.joyent.dev",
-      "admin": "hostmaster.joyent.dev",
+      "host": "ns1.relay.sh",
+      "admin": "hostmaster.relay.sh",
       "serial": 2012032000,
       "refresh": 43200,
       "retry": 86400,
@@ -14,7 +14,7 @@
     },
     "ns": [ 
       { 
-        "data": "ns1.lab.joyent.dev", 
+        "data": "ns1.relay.sh", 
         "ttl": 5 
       }
     ],
@@ -25,7 +25,7 @@
     "srv": {
       "_tcp": {
         "_sip": {
-          "data": "sip.lab.joyent.dev", 
+          "data": "sip.relay.sh", 
           "ttl": 600, 
           "priority": 0, 
           "weight": 10, 
@@ -35,12 +35,12 @@
     },
     "mx": [
       { 
-        "exchange": "smtp.lab.joyent.dev",
+        "exchange": "smtp.relay.sh",
         "priority": 10,
         "ttl": 600
       },
       { 
-        "exchange": "smtp2.lab.joyent.dev",
+        "exchange": "smtp2.relay.sh",
         "priority": 10,
         "ttl": 600
       }
@@ -60,11 +60,15 @@
           "ttl": 5
         }
       ],
-      "bh1-www0": [ 
+      "www0": [ 
         { 
           "data": "10.2.0.2",
           "type": "A",
           "ttl": 5
+        },
+        { 
+          "data": "10.2.0.3",
+          "type": "A"
         },
         { 
           "data": "2001:abcd:1234::1",
@@ -72,7 +76,7 @@
           "ttl": 20
         }
       ],
-      "labwww": [ 
+      "testwww": [ 
         { 
           "data": "bh1-www0",
           "type": "CNAME",

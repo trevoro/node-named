@@ -11,7 +11,21 @@ basis).
 
 ## Creating a DNS Server
 
-To create a DNS server simply require 'node-named'. 
+To create a DNS server simply require 'node-named' then create a new server and
+bind to your port. You can bind to as many ports as you like. More importantly,
+you can bind to both 'udp4', and 'udp6' sockets. For example:
+
+    var named = require('node-named');
+    var agent = named.createAgent();
+    agent.bind('udp4', 9999);
+    agent.bind('udp6', 9999);
+
+
+## Storing DNS Records
+
+The default server comes with a very simple memory based record storage
+mechanism. You can implement you own and pass that in as an argument when you
+create a new agent. 
 
 ## Logging
 
@@ -25,13 +39,7 @@ You can pass in an alternate logger if you wish. If you do not, then it will use
 bunyan by default. Your logger must expose the functions 'info', 'debug',
 'warn', 'trace', 'error', and 'notice'.
 
-## Storing DNS Records
-
-The default server comes with a very simple memory based record storage
-mechanism. You can implement you own and pass that in as an argument when you
-create a new agent. 
-
-## Supported Record Types
+### Supported Record Types
 
 The following record types are supported
 
@@ -41,7 +49,7 @@ The following record types are supported
  * SOA (start of authority)
  * MX (mail server records)
 
-## TODO
+### TODO
 
  * Add support for:
   - PTR   
