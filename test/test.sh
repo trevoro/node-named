@@ -51,5 +51,5 @@ out=$(dig @$SERVER -p $PORT -t AAAA joyent.dev $DIGOPTS)
 if [[ $? -ne 0 ]] ; then
 	_fatal "record lookup failed"
 else
-	printf "%19s\n" "OK"
+	printf "%17s\n" "OK"
 fi

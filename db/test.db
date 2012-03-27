@@ -4,8 +4,8 @@
   ],
   "joyent.dev": {
     "soa": {
-      "host": ["ns1", "lab", "joyent", "dev"],
-      "admin": ["hostmaster", "joyent", "dev"],
+      "host": "ns1.lab.joyent.dev",
+      "admin": "hostmaster.joyent.dev",
       "serial": 2012032000,
       "refresh": 43200,
       "retry": 86400,
@@ -13,39 +13,71 @@
       "ttl": 604800
     },
     "ns": [ 
-      [ "ns1.lab.joyent.dev", 5 ]
+      { 
+        "data": "ns1.lab.joyent.dev", 
+        "ttl": 5 
+      }
     ],
-    "txt": [ "some text goes here", 600 ],
+    "txt": { 
+      "data": "some text goes here",
+      "ttl": 600
+    },
     "srv": {
       "_tcp": {
-        "_sip": [ "sip.lab.joyent.dev", 600, 0, 10, 5060 ]
+        "_sip": {
+          "data": "sip.lab.joyent.dev", 
+          "ttl": 600, 
+          "priority": 0, 
+          "weight": 10, 
+          "port": 5060 
+        }
       }
     },
     "mx": [
       { 
-      	"exchange": ["smtp", "lab", "joyent", "dev"], 
+        "exchange": "smtp.lab.joyent.dev",
         "priority": 10,
         "ttl": 600
       },
       { 
-      	"exchange": ["smtp2", "lab", "joyent", "dev"], 
+        "exchange": "smtp2.lab.joyent.dev",
         "priority": 10,
         "ttl": 600
       }
     ],
     "hosts": {
       "ns1": [ 
-        [ "A", "10.2.0.2", 5 ]
+        { 
+          "data": "10.2.0.2",
+          "type": "A",
+          "ttl": 5
+        }
       ],
       "www": [
-        [ "CNAME", [ "ns1" ], 5 ]
+        { 
+          "data": "ns1",
+          "type": "CNAME",
+          "ttl": 5
+        }
       ],
       "bh1-www0": [ 
-        [ "A", "10.2.0.2", 5 ],
-        [ "AAAA", "::1", 20 ]
+        { 
+          "data": "10.2.0.2",
+          "type": "A",
+          "ttl": 5
+        },
+        { 
+          "data": "2001:abcd:1234::1",
+          "type": "AAAA",
+          "ttl": 20
+        }
       ],
       "labwww": [ 
-        [ "CNAME", [ "bh1-www0" ], 10 ]
+        { 
+          "data": "bh1-www0",
+          "type": "CNAME",
+          "ttl": 20
+        }
       ]
     }
   }
