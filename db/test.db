@@ -4,10 +4,9 @@
   ],
   "joyent.dev": {
     "soa": {
-      "domain": "joyent.dev",
-      "host": "ns1.lab.joyent.dev",
-      "admin": "hostmaster.joyent.com",
-      "serial": 201202160000,
+      "host": ["ns1", "lab", "joyent", "dev"],
+      "admin": ["hostmaster", "joyent", "dev"],
+      "serial": 2012032000,
       "refresh": 43200,
       "retry": 86400,
       "expire": 2419200,
@@ -23,7 +22,16 @@
       }
     },
     "mx": [
-      [ "smtp.lab.joyeny.dev", 600, 10 ]
+      { 
+      	"exchange": ["smtp", "lab", "joyent", "dev"], 
+        "priority": 10,
+        "ttl": 600
+      },
+      { 
+      	"exchange": ["smtp2", "lab", "joyent", "dev"], 
+        "priority": 10,
+        "ttl": 600
+      }
     ],
     "hosts": {
       "ns1": [ 
