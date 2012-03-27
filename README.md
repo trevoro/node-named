@@ -13,6 +13,24 @@ basis).
 
 To create a DNS server simply require 'node-named'. 
 
+## Logging
+
+node-named uses [http://github.com/trentm/node-bunyan](bunyan) for logging.
+It's a lot nicer to use if you npm install bunyan and put the bunyan tool in
+your path. Otherwise, you will end up with JSON formatted log output by default.
+
+### Replacing the default logger
+
+You can pass in an alternate logger if you wish. If you do not, then it will use
+bunyan by default. Your logger must expose the functions 'info', 'debug',
+'warn', 'trace', 'error', and 'notice'.
+
+## Storing DNS Records
+
+The default server comes with a very simple memory based record storage
+mechanism. You can implement you own and pass that in as an argument when you
+create a new agent. 
+
 ## Supported Record Types
 
 The following record types are supported
