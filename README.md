@@ -1,5 +1,7 @@
 # Node Named - DNS Server in Node.js
 
+## WIP - Don't use it yet. :)
+
 ## TODO
 
  * Add support for:
