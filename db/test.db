@@ -1,11 +1,11 @@
 {
   "_domains": [
-    "relay.sh"
+    "example.com"
   ],
-  "relay.sh": {
+  "example.com": {
     "soa": {
-      "host": "ns1.relay.sh",
-      "admin": "hostmaster.relay.sh",
+      "host": "ns1.example.com",
+      "admin": "hostmaster.example.com",
       "serial": 2012032000,
       "refresh": 43200,
       "retry": 86400,
@@ -14,7 +14,7 @@
     },
     "ns": [ 
       { 
-        "data": "ns1.relay.sh", 
+        "data": "ns1.example.com", 
         "ttl": 5 
       }
     ],
@@ -25,7 +25,7 @@
     "srv": {
       "_tcp": {
         "_sip": {
-          "data": "sip.relay.sh", 
+          "data": "sip.example.com", 
           "ttl": 600, 
           "priority": 0, 
           "weight": 10, 
@@ -35,12 +35,12 @@
     },
     "mx": [
       { 
-        "exchange": "smtp.relay.sh",
+        "exchange": "smtp.example.com",
         "priority": 10,
         "ttl": 600
       },
       { 
-        "exchange": "smtp2.relay.sh",
+        "exchange": "smtp2.example.com",
         "priority": 10,
         "ttl": 600
       }
