@@ -12,7 +12,7 @@
     "node": "0.6.*"
   },
   "dependencies": {
-    "bunyan": "0.6",
+    "bunyan": "0.6.8",
     "ipaddr.js": "0.1.1"
   }
 }

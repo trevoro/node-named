@@ -18,20 +18,23 @@
         "ttl": 5 
       }
     ],
-    "txt": { 
-      "data": "some text goes here",
-      "ttl": 600
-    },
     "srv": {
-      "_tcp": {
-        "_sip": {
-          "data": "sip.example.com", 
+      "_sip._tcp": [
+        {
+          "target": "sip1.example.com", 
           "ttl": 600, 
           "priority": 0, 
           "weight": 10, 
           "port": 5060 
+        },
+        {
+          "target": "sip2.example.com", 
+          "ttl": 600, 
+          "priority": 1, 
+          "weight": 20, 
+          "port": 5060 
         }
-      }
+      ]
     },
     "mx": [
       { 
@@ -69,6 +72,10 @@
         { 
           "data": "10.2.0.3",
           "type": "A"
+        },
+        { 
+          "data": "testkey=testvalue",
+          "type": "TXT"
         },
         { 
           "data": "2001:abcd:1234::1",

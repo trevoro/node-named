@@ -24,8 +24,8 @@ you can bind to both 'udp4', and 'udp6' sockets. For example:
 ## Storing DNS Records
 
 The default server comes with a very simple memory based record storage
-mechanism. You can implement you own and pass that in as an argument when you
-create a new agent. 
+mechanism. The goal is that you can implement your own, and pass that in when
+you create a new agent. See TODO
 
 ## Logging
 
@@ -48,13 +48,23 @@ The following record types are supported
  * CNAME (aliases)
  * SOA (start of authority)
  * MX (mail server records)
+ * TXT (arbitrary text entries)
+ * SRV (service discovery)
 
 ### TODO
 
  * Add support for:
   - PTR   
-  - TXT
-  - SRV
+  - DNS query recursion (luckily we can use c-ares for this!)
   - AXFR requests (and tcp listener)
 
- * Add query recurser
+ * Significantly improve record types and break that out of the existing store
+   system
+ * Modularize store so that it can be extended with custom stores
+ * Add support to the store for adding records while the system is up and
+   running
+ * Add either a pre-processor to prebuild all queries, or
+ * Add a cache to store pre-serialized queries. This cache will have to have LRU
+   and a triggered deletion (if you delete a record, make sure you delete the
+   cache object)
+ * Add child components for logging
