@@ -1,11 +1,11 @@
 {
   "author": "trevoro <trevoro@gmail.com>",
-  "name": "namedjs",
+  "name": "node-named",
   "description": "DNS server",
   "version": "0.0.1",
   "repository": {
     "type": "git",
-    "url": "git://github.com/trevoro/node-namedjs.git"
+    "url": "git://github.com/trevoro/node-named.git"
   },
   "main": "lib/index.js",
   "engines": {
