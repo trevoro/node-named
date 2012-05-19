@@ -23,41 +23,41 @@
 
 var samples = [
   { id: 0,
-  	description: "DNS QUERY - IN A NS1.JOYENT.DEV",
-		data: "0f 34 01 00 00 01 00 00 00 00 00 00 03 6e 73 31 06 6a 6f 79 65 6e 74 03 64 65 76 00 00 01 00 01",
+    description: "DNS QUERY - IN A NS1.JOYENT.DEV",
+    data: "0f 34 01 00 00 01 00 00 00 00 00 00 03 6e 73 31 06 6a 6f 79 65 6e 74 03 64 65 76 00 00 01 00 01",
   },
   { id: 1,
-  	description: "DNS QUERY - IN AAAA NS1.JOYENT.DEV",
-		data: "b9 dd 01 00 00 01 00 00 00 00 00 00 03 6e 73 31 06 6a 6f 79 65 6e 74 03 64 65 76 00 00 1c 00 01",
+    description: "DNS QUERY - IN AAAA NS1.JOYENT.DEV",
+    data: "b9 dd 01 00 00 01 00 00 00 00 00 00 03 6e 73 31 06 6a 6f 79 65 6e 74 03 64 65 76 00 00 1c 00 01",
   }
 ];
 
 var encode = function (data) {
-	var tokens, buffer, pos = 0;
-	
-	if (typeof(data) !== 'string') {
-		throw new TypeError('data (string) is required');
-	}
+  var tokens, buffer, pos = 0;
+  
+  if (typeof(data) !== 'string') {
+    throw new TypeError('data (string) is required');
+  }
 
-	tokens = data.split(/\s/);
-	buffer = new Buffer(tokens.length);
+  tokens = data.split(/\s/);
+  buffer = new Buffer(tokens.length);
 
-	for (i in tokens) {
-    var t = '0x' + tokens[i]; 	 
+  for (i in tokens) {
+    var t = '0x' + tokens[i];    
     var v = parseInt(t);
     buffer.writeInt8(v, pos++, true);
-	}
-	return buffer;
+  }
+  return buffer;
 }
 
 var encodeSamples = function(samples) {
-	var sample, results = [];
-	for (i in samples) {
-		sample = samples[i];
-		sample.raw = encode(sample.data);
-		results.push(sample);
-	}
-	return results;
+  var sample, results = [];
+  for (i in samples) {
+    sample = samples[i];
+    sample.raw = encode(sample.data);
+    results.push(sample);
+  }
+  return results;
 }
 
 
