@@ -1,6 +1,6 @@
 {
   "author": "trevoro <trevoro@gmail.com>",
-  "name": "node-named",
+  "name": "named",
   "description": "DNS server",
   "version": "0.0.1",
   "repository": {

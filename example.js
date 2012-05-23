@@ -35,7 +35,6 @@ server.on('query', function(query) {
       break;
     case qType['SRV']:
       var target = new record.SRV('sip.example.com', 5060);
-      assert.ok(target.valid());
       query.addAnswer(domain, target, 'SRV');
       break;
     case qType['TXT']:
@@ -44,4 +43,8 @@ server.on('query', function(query) {
       break;
   }
   server.send(query);
+});
+
+server.on('clientError', function(error) {
+	console.log("there was an error: %s", error);
 });
