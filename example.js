@@ -10,34 +10,34 @@ server.listen(9999, '127.0.0.1', function() {
 
 server.on('query', function(query) {
   var domain = query.name;
-  var type = query.type;
+  var type = query.getType();
   console.log('DNS Query: (%s) %s', type, domain);
   switch (type) {
-    case qType['A']:
+    case 'A':
       var target = new record.A('127.0.0.1');
       query.addAnswer(domain, target, 'A');
       break;
-    case qType['AAAA']:
+    case 'AAAA':
       var target = new record.AAAA('::1');
       query.addAnswer(domain, target, 'AAAA');
       break;
-    case qType['CNAME']:
+    case 'CNAME':
       var target = new record.CNAME('cname.example.com');
       query.addAnswer(domain, target, 'CNAME');
       break;
-    case qType['MX']:
+    case 'MX':
       var target = new record.MX('smtp.example.com');
       query.addAnswer(domain, target, 'MX');
       break;
-    case qType['SOA']:
+    case 'SOA':
       var target = new record.SOA('example.com');
       query.addAnswer(domain, target, 'SOA');
       break;
-    case qType['SRV']:
+    case 'SRV':
       var target = new record.SRV('sip.example.com', 5060);
       query.addAnswer(domain, target, 'SRV');
       break;
-    case qType['TXT']:
+		case 'TXT':
       var target = new record.TXT('hello world');
       query.addAnswer(domain, target, 'TXT');
       break;
