@@ -9,8 +9,8 @@ server.listen(9999, '127.0.0.1', function() {
 });
 
 server.on('query', function(query) {
-  var domain = query.question.name;
-  var type = query.question.type;
+  var domain = query.name;
+  var type = query.type;
   console.log('DNS Query: (%s) %s', type, domain);
   switch (type) {
     case qType['A']:
