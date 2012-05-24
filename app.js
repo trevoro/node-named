@@ -7,9 +7,13 @@ server.listen(9999, '127.0.0.1', function() {
 });
 
 server.on('query', function(query) {
-  console.log('DNS Query: %s', query.question.name);
-  var domain = query.question.name;
+  console.log('DNS Query: %s', query.name);
+  var domain = query.name;
 	var target = new record.SOA(domain, {serial: 12345});
   query.addAnswer(domain, target, 'SOA');
   server.send(query);
+});
+
+server.on('clientError', function(error) {
+	console.log(error);
 });
