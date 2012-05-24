@@ -16,16 +16,12 @@ functionality that is in use today.
     });
 
     server.on('query', function(query) {
-      console.log('DNS Query: %s', query.name);
-      var target = new SoaRecord(query.name, {serial: 12345});
+      var domain = query.name();
+      console.log('DNS Query: %s', domain)
+      var target = new SoaRecord(domain, {serial: 12345});
       query.addAnswer(domain, target, 'SOA');
       server.send(query);
     });
-
-    server.on('clientError', function(error) {
-      console.log('got a bad client request: %s', error);
-    });
-
 
 ## Creating DNS Records
 

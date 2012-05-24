@@ -11,32 +11,32 @@ server.on('query', function(query) {
   console.log('DNS Query: (%s) %s', type, domain);
   switch (type) {
     case 'A':
-      var target = new named.ARecord('127.0.0.1');
-      query.addAnswer(domain, target, 'A');
+      var record = new named.ARecord('127.0.0.1');
+      query.addAnswer(domain, record, 'A');
       break;
     case 'AAAA':
-      var target = new named.AaaaRecord('::1');
-      query.addAnswer(domain, target, 'AAAA');
+      var record = new named.AaaaRecord('::1');
+      query.addAnswer(domain, record, 'AAAA');
       break;
     case 'CNAME':
-      var target = new named.CnameRecord('cname.example.com');
-      query.addAnswer(domain, target, 'CNAME');
+      var record = new named.CnameRecord('cname.example.com');
+      query.addAnswer(domain, record, 'CNAME');
       break;
     case 'MX':
-      var target = new named.MxRecord('smtp.example.com');
-      query.addAnswer(domain, target, 'MX');
+      var record = new named.MxRecord('smtp.example.com');
+      query.addAnswer(domain, record, 'MX');
       break;
     case 'SOA':
-      var target = new named.SoaRecord('example.com');
-      query.addAnswer(domain, target, 'SOA');
+      var record = new named.SoaRecord('example.com');
+      query.addAnswer(domain, record, 'SOA');
       break;
     case 'SRV':
-      var target = new named.SrvRecord('sip.example.com', 5060);
-      query.addAnswer(domain, target, 'SRV');
+      var record = new named.SrvRecord('sip.example.com', 5060);
+      query.addAnswer(domain, record, 'SRV');
       break;
 		case 'TXT':
-      var target = new named.TxtRecord('hello world');
-      query.addAnswer(domain, target, 'TXT');
+      var record = new named.TxtRecord('hello world');
+      query.addAnswer(domain, record, 'TXT');
       break;
   }
   server.send(query);
@@ -44,4 +44,8 @@ server.on('query', function(query) {
 
 server.on('clientError', function(error) {
 	console.log("there was a clientError: %s", error);
+});
+
+server.on('uncaughtException', function(error) {
+	console.log("there was an excepton: %s", error.message());
 });

@@ -245,9 +245,28 @@ Create a text resource record.
 `target` can be any text up to 500 bytes in length
 
 
-## DNSErrors
+## DnsError
 
-TODO
+DnsErrors rae objects that consist of:
+- `code`: A unique error number
+- `name`: the name of the error
+
+DnsErrors are:
+
+- `NoError` 
+- `ProtocolError`
+- `CannotProcessError` 
+- `NoNameError`
+- `NotImplementedError`
+- `RefusedError`
+- `ExceptionError`
+
+## Class: named.DnsError
+
+### error.message()
+
+Returns the message that was passed in to the error. The message is a string,
+and can be used for logging purposes
 
 ## Server Properties
 
