@@ -1,5 +1,4 @@
 var named = require('./lib/index');
-var record = named.Record;
 var server = named.createServer();
 
 server.listen(9999, '127.0.0.1', function() {
@@ -7,13 +6,9 @@ server.listen(9999, '127.0.0.1', function() {
 });
 
 server.on('query', function(query) {
-  console.log('DNS Query: %s', query.name);
-  var domain = query.name;
-	var target = new record.SOA(domain, {serial: 12345});
+  var domain = query.name();
+  console.log('DNS Query: %s', domain)
+	var record = new named.SoaRecord(domain, {serial: 12345});
   query.addAnswer(domain, target, 'SOA');
   server.send(query);
-});
-
-server.on('clientError', function(error) {
-	console.log(error);
 });

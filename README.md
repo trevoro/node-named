@@ -9,7 +9,6 @@ functionality that is in use today.
 ## Creating a DNS Server
 
     var named = require('./lib/index');
-    var record = named.Record;
     var server = named.createServer();
 
     server.listen(9999, '127.0.0.1', function() {
@@ -17,11 +16,14 @@ functionality that is in use today.
     });
 
     server.on('query', function(query) {
-      console.log('DNS Query: %s', query.question.name);
-      var domain = query.question.name;
-      var target = new record.SOA(domain, {serial: 12345});
+      console.log('DNS Query: %s', query.name);
+      var target = new SoaRecord(query.name, {serial: 12345});
       query.addAnswer(domain, target, 'SOA');
       server.send(query);
+    });
+
+    server.on('clientError', function(error) {
+      console.log('got a bad client request: %s', error);
     });
 
 
@@ -35,9 +37,8 @@ They only exist fo the length of the particular request. After that, they are
 destroyed. This means you have to create your own lookup mechanism.
 
     var named = require('node-named');
-    var record = named.record;
     
-    var soaRecord = record.SOA('example.com', {serial: 201205150000});
+    var soaRecord = named.SoaRecord('example.com', {serial: 201205150000});
     console.log(soaRecord);
 
 ### Supported Record Types

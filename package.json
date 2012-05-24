@@ -1,18 +1,24 @@
 {
-  "author": "trevoro <trevoro@gmail.com>",
   "name": "named",
   "description": "DNS server",
   "version": "0.0.1",
+  "author": "trevoro <trevoro@gmail.com>",
+  "contributors": [
+    "Mark Cavage"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/trevoro/node-named.git"
   },
   "main": "lib/index.js",
   "engines": {
-    "node": "0.6.*"
+    "node": ">=0.6"
   },
   "dependencies": {
     "bunyan": "0.6.8",
     "ipaddr.js": "0.1.1"
+  },
+  "devDependencies": {
+    "tap": "0.2.4"
   }
 }

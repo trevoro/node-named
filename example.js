@@ -6,8 +6,8 @@ server.listen(9999, '127.0.0.1', function() {
 });
 
 server.on('query', function(query) {
-  var domain = query.name;
-  var type = query.getType();
+  var domain = query.name()
+  var type = query.type();
   console.log('DNS Query: (%s) %s', type, domain);
   switch (type) {
     case 'A':
@@ -43,5 +43,5 @@ server.on('query', function(query) {
 });
 
 server.on('clientError', function(error) {
-	console.log("there was an error: %s", error);
+	console.log("there was a clientError: %s", error);
 });
