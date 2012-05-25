@@ -33,8 +33,8 @@ stored in a central system using a mechanism of your choosing.
     });
 
     server.on('query', function(query) {
-      console.log('DNS Query: %s', query.name);
-      var target = new named.SoaRecord(query.name, {serial: 12345});
+      var domain = query.name();
+      var target = new named.SoaRecord(domain, {serial: 12345});
       query.addAnswer(domain, target, 'SOA');
       server.send(query);
     });
@@ -161,13 +161,33 @@ appropriate lookup & generate an appropriate response.
 
 ### query.name()
 
+Returns a string containing the query question name. This may be a hostname, but
+depends on the type
+
 ### query.type()
+
+Returns a string containing the type code for the query question.
 
 ### query.answers()
 
+Returns an array of answers that have been added to the query
+
 ### query.addAnswer(name, record, type, [ttl])
 
+Add an instances of `named.Record` to the query.
+Name is the name you want to respond with (in 99.99% of cases, the
+query.name()), record is the record instance, and type is the type of record you
+are responding with. In most cases this will be what the query.type() returns,
+but for instances like an 'A' or 'AAAA' request you may elect to respond with a
+CNAME record. 
+
+TTL is optional, and defaults to 5 seconds.
+
 ### query.operation()
+
+Returns the type of operation that the client is requesting. In almost all cases
+this will be 'query'. Valid operations are 'query', 'status', 'notify', and
+'update'.
 
 ### query.encode()
 
@@ -244,6 +264,12 @@ Options:
 Create a text resource record.
 `target` can be any text up to 500 bytes in length
 
+## Class: named.Record
+
+### record.valid()
+
+This function will ensure that the data you used to create the record is in fact
+valid.
 
 ## DnsError
 
