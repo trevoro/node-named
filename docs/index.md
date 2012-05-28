@@ -105,6 +105,11 @@ the client in the object itself. The `send` function will encode the message
 and send the response to the appropriate client. Unsolicited DNS messages are 
 not permitted. This function should only be used within the `query` event.
 
+### server.close(onClose)
+
+Stops listening and closes the socket. `onClose` is an optional callback that
+will be attached to the underlying socket `close` event.
+
 ### Event: 'listening'
 
 `function() { }`

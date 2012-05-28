@@ -23,12 +23,16 @@
 
 var samples = [
   { id: 0,
-    description: "DNS QUERY - IN A NS1.JOYENT.DEV",
-    data: "0f 34 01 00 00 01 00 00 00 00 00 00 03 6e 73 31 06 6a 6f 79 65 6e 74 03 64 65 76 00 00 01 00 01",
+    description: 'query ns1.joyent.dev (A)',
+    data: "0f 34 01 00 00 01 00 00 00 00 00 00 03 6e 73 31 06 6a 6f 79 65 " + 
+      "6e 74 03 64 65 76 00 00 01 00 01",
+    type: 'queryMessage'
   },
   { id: 1,
-    description: "DNS QUERY - IN AAAA NS1.JOYENT.DEV",
-    data: "b9 dd 01 00 00 01 00 00 00 00 00 00 03 6e 73 31 06 6a 6f 79 65 6e 74 03 64 65 76 00 00 1c 00 01",
+    description: 'query ns1.joyent.dev (AAAA)',
+    data: "b9 dd 01 00 00 01 00 00 00 00 00 00 03 6e 73 31 06 6a 6f 79 65 " + 
+      "6e 74 03 64 65 76 00 00 1c 00 01",
+    type: 'queryMessage'
   }
 ];
 
@@ -60,5 +64,23 @@ var encodeSamples = function(samples) {
   return results;
 }
 
+equalBuffers = function(b1, b2) {
+	if (b1.length !== b2.length) {
+		return false;
+	}
 
-module.exports = encodeSamples(samples);
+	var l = b1.length;
+	while (l--) {
+		var one = b1.readUInt8(l);
+		var two = b2.readUInt8(l);
+		if (one !== two) {
+			return false;
+		}
+	}
+	return true;
+}
+
+module.exports = {
+  samples: encodeSamples(samples),
+  equalBuffers: equalBuffers
+}
