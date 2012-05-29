@@ -1,4 +1,4 @@
-var named = require('./lib/index');
+var named = require('../lib');
 var server = named.createServer();
 
 server.listen(9999, '127.0.0.1', function() {

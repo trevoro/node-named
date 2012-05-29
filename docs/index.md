@@ -105,6 +105,9 @@ the client in the object itself. The `send` function will encode the message
 and send the response to the appropriate client. Unsolicited DNS messages are 
 not permitted. This function should only be used within the `query` event.
 
+**Note** If you do not add any answers to your query, then the `send()` method
+will send a 'null-response' DNS message. This is the equivalent of an HTTP 404.
+
 ### server.close(onClose)
 
 Stops listening and closes the socket. `onClose` is an optional callback that
@@ -300,4 +303,5 @@ Returns the message that was passed in to the error. The message is a string,
 and can be used for logging purposes
 
 ## Server Properties
+
 
