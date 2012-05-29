@@ -6,7 +6,7 @@ var helper = require('./helper');
 
 var test = helper.test;
 
-var samples = {
+var toTest = {
   nsName: [
    [ 'example.com', true ],
    [ '0example.com', true ],
@@ -18,23 +18,64 @@ var samples = {
    [ 'example-111.com', true ],
    [ 'Example-111.com', true ],
    [ 'a name with spaces', false ],
-   [ function() { 
-     var r = ''; 
-     for (var i=0;i<513;i++) { r += 'a' } 
-     return r; }(), 
-   false ]
+  ],
+  UInt32BE: [
+    [ 'hello', false ],
+    [ '12345', true ],
+    [ 4294967296, false ],
+    [ 10, true ]
+  ],
+  UInt16BE: [
+    [ 'hello', false ],
+    [ '12345', true ],
+    [ 65536, false ],
+    [ 10, true ]
+  ],
+  nsText: [
+    [ 'hello world', true ],
   ]
 };
 
+test('testing validator (nsName)', function(t) {
+  var k = 'nsName';
+  for (var i in toTest.k) {
+    var s = toTest.k[i][0];
+    var ok = toTest.k[i][1];
+    var result = validators.k(s);
+    t.equal(result, ok);
+  }
+  t.end();
+});
 
-for (var key in samples) {
-  test('nsType validator: ' + key, function(t) {
-    for (var i in samples[key]) {
-      var s = samples[key][i][0];
-      var ok = samples[key][i][1];
-      var result = validators[key](s);
-      t.equal(result, ok);
-    }
-    t.end();
-  });
-}
+test('testing validator (UInt32BE)', function(t) {
+  var k = 'UInt32BE';
+  for (var i in toTest.k) {
+    var s = toTest.k[i][0];
+    var ok = toTest.k[i][1];
+    var result = validators.k(s);
+    t.equal(result, ok);
+  }
+  t.end();
+});
+
+test('testing validator (UInt16BE)', function(t) {
+  var k = 'UInt16BE';
+  for (var i in toTest.k) {
+    var s = toTest.k[i][0];
+    var ok = toTest.k[i][1];
+    var result = validators.k(s);
+    t.equal(result, ok);
+  }
+  t.end();
+});
+
+test('testing validator (nsText)', function(t) {
+  var k = 'nsText';
+  for (var i in toTest.k) {
+    var s = toTest.k[i][0];
+    var ok = toTest.k[i][1];
+    var result = validators.k(s);
+    t.equal(result, ok);
+  }
+  t.end();
+});
