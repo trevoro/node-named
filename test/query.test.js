@@ -1,65 +1,29 @@
-var dig = require('./dig');
 var named = require('../lib');
+var dnsBuffer = require('./dnsbuffer');
 
 if (require.cache[__dirname + '/helper.js'])
-  delete require.cache[__dirname + '/helper.js']
+  delete require.cache[__dirname + '/helper.js'];
 var helper = require('./helper');
 
-// -- globals
-var server;
 var test = helper.test;
 var before = helper.before;
 var after = helper.after;
 
-var options = {port: 9999, server: '::1'};
+var raw, src;
 
 before(function(callback) {
   try {
-    server = named.createServer({
-      log: helper.getLog('server')
-    });
-    
-    server.on('query', function(query) {
-      var domain = query.name()
-      var type = query.type();
-      
-      switch (type) {
-        case 'A':
-          var record = new named.ARecord('127.0.0.1');
-          query.addAnswer(domain, record, 'A');
-          break;
-        case 'AAAA':
-          var record = new named.AaaaRecord('::1');
-          query.addAnswer(domain, record, 'AAAA');
-          break;
-        case 'CNAME':
-          var record = new named.CnameRecord('cname.example.com');
-          query.addAnswer(domain, record, 'CNAME');
-          break;
-        case 'MX':
-          var record = new named.MxRecord('smtp.example.com');
-          query.addAnswer(domain, record, 'MX');
-          break;
-        case 'SOA':
-          var record = new named.SoaRecord('example.com');
-          query.addAnswer(domain, record, 'SOA');
-          break;
-        case 'SRV':
-          var record = new named.SrvRecord('sip.example.com', 5060);
-          query.addAnswer(domain, record, 'SRV');
-          break;
-        case 'TXT':
-          var record = new named.TxtRecord('hello world');
-          query.addAnswer(domain, record, 'TXT');
-          break;
-      }
-      server.send(query);
-    });
+    raw = { 
+      buf: dnsBuffer.samples[0].raw,
+      len: dnsBuffer.samples[0].length
+    }
+    src = {
+      family: 'udp6',
+      address: '127.0.0.1',
+      port: 23456
+    }
 
-    server.listen(options.port, options.server, function() {
-      process.nextTick(callback);
-    });
-
+    process.nextTick(callback);
   }
   catch (e) {
     console.error(e.stack);
@@ -67,21 +31,27 @@ before(function(callback) {
   }
 });
 
-after(function (callback) {
-  try {
-    server.close(callback);
-  }
-  catch (e) {
-    console.error(e.stack);
-    process.exit(1);
-  }
+
+test('decode a query datagram', function(t) {
+  var query = named.Query.parse(raw, src);
+  t.end();
 });
 
-test('query: example.com (A)', function(t) {
-  dig('example.com', 'A', options, function(err, results) {
-    var ok = { name: 'example.com.', ttl: 5, type: 'A', target: '127.0.0.1' };
-    t.deepEqual(results.answers[0], ok);
-    t.end();
-  });
+test('create a new query object', function(t) {
+  var decoded = named.Query.parse(raw, src);
+  var query = named.Query.createQuery(decoded);
+  t.end();
 });
 
+test('encode an null-response query object', function(t) {
+  var decoded = named.Query.parse(raw, src);
+  var query = named.Query.createQuery(decoded);
+  query.encode();
+  var ok = dnsBuffer.samples[0].raw;
+  t.deepEqual(query._raw.buf, ok);
+  t.end();
+});
+
+// TODO test adding a record
+// TODO test name response
+// TODO test answers response

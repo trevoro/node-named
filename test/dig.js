@@ -60,7 +60,7 @@ var parseDig = function(output) {
     }
    
     if (section === 'answer') {
-      if (/^([A-Za-z0-9])+/.test(l)) {
+      if (/^([_A-Za-z0-9])+/.test(l)) {
         var tokens = l.match(/(.*)/)[0].split(/\t/);
         var answer = parseAnswer(tokens);
         if (answer) 
