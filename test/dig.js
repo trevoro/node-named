@@ -1,113 +1,113 @@
-/*
+// Quick and dirty 'dig' wrapper
 
-   Quick and dirty wrapper for the `dig` command
-
-*/
-
-var exec = require('child_process').exec;
 var assert = require('assert');
-
-var DIG = '/usr/bin/dig';
-
-var parseDig = function(output) {
-  var lines = output.split(/\n/);
-  var section = 'header';
-  
-  var results = {
-    question: null,
-    answers: [],
-    additional: [],
-    authority: []
-  };
-
-  var parseAnswer = function(tokens) {
-    var t = tokens.filter(function(v) { if (v !== '') return v; });
-    
-    var r = {
-      name:   t[0],
-      ttl:    parseInt(t[1]),
-      type:   t[3],
-      target: t[4]
-    }
-
-    return r;
-  }
+var exec = require('child_process').exec;
+var sprintf = require('util').format;
 
 
-  for (var i in lines) {
-    var l = lines[i];
 
-    if (l === '') {
-      section = undefined;
-    }
-    else if (/^;; QUESTION SECTION:/.test(l)) {
-      section = 'question';
-    } 
-    else if (/^;; ANSWER SECTION:/.test(l)) {
-      section = 'answer';
-    }
-    else if (/^;; ADDITIONAL SECTION:/.test(l)) {
-      section = 'additional';
-    }
-    else if (/^;; AUTHORITY SECTION:/.test(l)) {
-      section = 'authority';
-    }
+///--- Globals
 
-    if (section === 'question') {
-      if (/^;([A-Za-z0-9])*\./.test(l)) {
-        results.question = l.match(/([A-Za-z0-9_\-\.])+/)[0];
-      }
-    }
-   
-    if (section === 'answer') {
-      if (/^([_A-Za-z0-9])+/.test(l)) {
-        var tokens = l.match(/(.*)/)[0].split(/\t/);
-        var answer = parseAnswer(tokens);
-        if (answer) 
-          results.answers.push(answer);
-      }
-    }
-  }
+var DIG = 'dig';
 
-  return results;
+
+
+///--- Helpers
+
+function parseAnswer(tokens) {
+        var t = tokens.filter(function (v) {
+                return (v !== '' ? v : undefined);
+        });
+
+        var r = {
+                name:   t[0],
+                ttl:    parseInt(t[1], 10),
+                type:   t[3],
+                target: t[4]
+        }
+
+        return (r);
 }
 
 
-var query = function(name, type, options, callback) {
-  assert.ok(name);
-  assert.ok(type);
+function parseDig(output) {
+        var lines = output.split(/\n/);
+        var section = 'header';
 
+        var results = {
+                question: null,
+                answers: [],
+                additional: [],
+                authority: []
+        };
 
-  if (typeof(name) !== 'string')
-    throw new TypeError('name (string) is required');
+        lines.forEach(function (l) {
+                if (l === '') {
+                        section = undefined;
+                } else if (/^;; QUESTION SECTION:/.test(l)) {
+                        section = 'question';
+                } else if (/^;; ANSWER SECTION:/.test(l)) {
+                        section = 'answer';
+                } else if (/^;; ADDITIONAL SECTION:/.test(l)) {
+                        section = 'additional';
+                } else if (/^;; AUTHORITY SECTION:/.test(l)) {
+                        section = 'authority';
+                }
 
-  if (typeof(type) !== 'string')
-    throw new TypeError('type (string) is required');
+                if (section === 'question') {
+                        if (/^;([A-Za-z0-9])*\./.test(l)) {
+                                results.question =
+                                        l.match(/([A-Za-z0-9_\-\.])+/)[0];
+                        }
+                }
 
-  if (callback == undefined) {
-    callback = options;
-    options = {};
-  }
+                if (section === 'answer') {
+                        if (/^([_A-Za-z0-9])+/.test(l)) {
+                                var tokens = l.match(/(.*)/)[0].split(/\t/);
+                                var answer = parseAnswer(tokens);
+                                if (answer)
+                                        results.answers.push(answer);
+                        }
+                }
+        });
 
-  type = type.toUpperCase();
-
-  var defaultOptions = '+time=1 +retry=0';
-  var cmd = [DIG];
-  if (options.server) cmd.push('@' + options.server);
-  if (options.port) cmd.push('-p ' + options.port);
-  
-  cmd.push('-t ' + type);
-  cmd.push(name);
-  cmd.push(defaultOptions);
-
-  
-  var child = exec(cmd.join(' '), function(error, stdout, stderr) {
-    if (error)
-      return callback(error, null);
-
-    return callback(null, parseDig(stdout));
-  });
+        return (results);
 }
 
 
-module.exports = query;
+
+///--- API
+
+function dig(name, type, options, callback) {
+        if (typeof (name) !== 'string')
+                throw new TypeError('name (string) is required');
+        if (typeof (type) !== 'string')
+                throw new TypeError('type (string) is required');
+        if (typeof (options) === 'function') {
+                callback = options;
+                options = {};
+        }
+
+        type = type.toUpperCase();
+
+        var opts = ''
+        if (options.server)
+                opts += ' @' + options.server;
+        if (options.port)
+                opts += ' -p ' + options.port;
+
+        var cmd = sprintf('dig %s -t %s %s +time=1 +retry=0', opts, type, name);
+        exec(cmd, function (err, stdout, stderr) {
+                if (err)
+                        return (callback(err));
+
+
+                return (callback(null, parseDig(stdout)));
+        });
+}
+
+
+
+///--- Exports
+
+module.exports = dig;
