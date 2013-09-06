@@ -8,20 +8,22 @@ functionality that is in use today.
 
 ## Creating a DNS Server
 
-    var named = require('./lib/index');
-    var server = named.createServer();
+```javascript
+var named = require('./lib/index');
+var server = named.createServer();
 
-    server.listen(9999, '127.0.0.1', function() {
-      console.log('DNS server started on port 9999');
-    });
+server.listen(9999, '127.0.0.1', function() {
+  console.log('DNS server started on port 9999');
+});
 
-    server.on('query', function(query) {
-      var domain = query.name();
-      console.log('DNS Query: %s', domain)
-      var target = new SoaRecord(domain, {serial: 12345});
-      query.addAnswer(domain, target, 'SOA');
-      server.send(query);
-    });
+server.on('query', function(query) {
+  var domain = query.name();
+  console.log('DNS Query: %s', domain)
+  var target = new SoaRecord(domain, {serial: 12345});
+  query.addAnswer(domain, target, 'SOA');
+  server.send(query);
+});
+```
 
 ## Creating DNS Records
 
@@ -32,10 +34,12 @@ remember that these DNS records are not permanently added to the server.
 They only exist fo the length of the particular request. After that, they are
 destroyed. This means you have to create your own lookup mechanism.
 
-    var named = require('node-named');
-    
-    var soaRecord = named.SoaRecord('example.com', {serial: 201205150000});
-    console.log(soaRecord);
+```javascript
+var named = require('node-named');
+
+var soaRecord = named.SoaRecord('example.com', {serial: 201205150000});
+console.log(soaRecord);
+```
 
 ### Supported Record Types
 
