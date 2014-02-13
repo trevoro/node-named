@@ -9,6 +9,7 @@ functionality that is in use today.
 ## Creating a DNS Server
 
 ```javascript
+#var named = require('node-namded'); // NPM version
 var named = require('./lib/index');
 var server = named.createServer();
 
@@ -17,10 +18,11 @@ server.listen(9999, '127.0.0.1', function() {
 });
 
 server.on('query', function(query) {
+  var ttl = 3600;
   var domain = query.name();
   console.log('DNS Query: %s', domain)
-  var target = new SoaRecord(domain, {serial: 12345});
-  query.addAnswer(domain, target, 'SOA');
+  var target = new server.SOARecord(domain, {serial: 12345});
+  query.addAnswer(domain, target, ttl);
   server.send(query);
 });
 ```
@@ -35,9 +37,10 @@ They only exist fo the length of the particular request. After that, they are
 destroyed. This means you have to create your own lookup mechanism.
 
 ```javascript
-var named = require('node-named');
+#var named = require('node-namded'); // NPM version
+var named = require('./lib/index');
 
-var soaRecord = named.SoaRecord('example.com', {serial: 201205150000});
+var soaRecord = named.SOARecord('example.com', {serial: 201205150000});
 console.log(soaRecord);
 ```
 
@@ -51,6 +54,7 @@ The following record types are supported
  * SOA (start of authority)
  * MX (mail server records)
  * TXT (arbitrary text entries)
+ * NS (nameserver entries)
  * SRV (service discovery)
 
 ## Logging
