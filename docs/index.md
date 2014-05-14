@@ -34,8 +34,9 @@ stored in a central system using a mechanism of your choosing.
 
     server.on('query', function(query) {
       var domain = query.name();
-      var target = new named.SoaRecord(domain, {serial: 12345});
-      query.addAnswer(domain, target, 'SOA');
+      var target = new named.SOARecord(domain, {serial: 12345});
+      // 300 is the ttl for this record
+      query.addAnswer(domain, target, 300);
       server.send(query);
     });
 
@@ -180,7 +181,7 @@ Returns a string containing the type code for the query question.
 
 Returns an array of answers that have been added to the query
 
-### query.addAnswer(name, record, type, [ttl])
+### query.addAnswer(name, record, ttl)
 
 Add an instances of `named.Record` to the query.
 Name is the name you want to respond with (in 99.99% of cases, the
@@ -188,8 +189,6 @@ query.name()), record is the record instance, and type is the type of record you
 are responding with. In most cases this will be what the query.type() returns,
 but for instances like an 'A' or 'AAAA' request you may elect to respond with a
 CNAME record. 
-
-TTL is optional, and defaults to 5 seconds.
 
 ### query.operation()
 
