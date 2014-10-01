@@ -214,7 +214,7 @@ which have different formats. These response formats are known as
 
 All records in named are created using the `new` keyword.
 
-### named.SoaRecord(domain, [options])
+### named.SOARecord(domain, [options])
 
 Create a DNS 'Start of Authority' record
 
@@ -233,17 +233,17 @@ Options:
 Create an IPv4 resource record
 `ipv4Addr` must be a valid IPv4 address (string).
 
-### named.AaaaRecord(ipv6Addr)
+### named.AAAARecord(ipv6Addr)
 
 Create an IPv6 resource record.
 `ipv6Addr` must be a valid IPv6 address (string).
 
-### named.CnameRecord(target)
+### named.CNAMERecord(target)
 
 Create an Alias record. When these records are sent to the client, the client
 will often make an additional request for the alias itself.
 
-### named.MxRecord(exchange, options)
+### named.MXRecord(exchange, options)
 
 Create a Mail Server record. A client making this request will often make an
 additional request for the entries in these records.
@@ -254,7 +254,7 @@ Options:
 - `priority`: The priority of this mailserver over other mailservers. You may
   have multiple mail servers. Lowest priority server is selected by client.
 
-### named.SrvRecord(target, port, options)
+### named.SRVRecord(target, port, options)
 
 Create a Server Resource record.
 `target` is the name of the server that handles this particular resource name
@@ -266,7 +266,7 @@ Options:
 - `priority`: Used by the client for selecting between mutiple results. Higher
   priortiy wins. Default is 10
   
-### named.TxtRecord(target)
+### named.TXTRecord(target)
 
 Create a text resource record.
 `target` can be any text up to 500 bytes in length
