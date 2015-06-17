@@ -41,6 +41,10 @@ before(function (callback) {
                         var record = new named.CNAMERecord('cname.example.com');
                         query.addAnswer(domain, record);
                         break;
+                case 'NS':
+                        var record = new named.NSRecord('ns.example.com');
+                        query.addAnswer(domain, record);
+                        break;
                 case 'MX':
                         var record = new named.MXRecord('smtp.example.com');
                         query.addAnswer(domain, record);
@@ -131,6 +135,19 @@ test('answer query: example.com (CNAME)', function (t) {
                         ttl: 5,
                         type: 'CNAME',
                         target: 'cname.example.com.'
+                }]);
+                t.end();
+        });
+});
+
+test('answer query: example.com (NS)', function (t) {
+        dig('example.com', 'NS', options, function (err, results) {
+                t.ifError(err);
+                t.deepEqual(results.answers, [{
+                        name: 'example.com.',
+                        ttl: 5,
+                        type: 'NS',
+                        target: 'ns.example.com.'
                 }]);
                 t.end();
         });

@@ -35,6 +35,11 @@ test('create a valid record (CNAME)', function(t) {
         testRecord(record, t);
 });
 
+test('create a valid record (NS)', function(t) {
+        var record = new named.NSRecord('ns.example.com');
+        testRecord(record, t);
+});
+
 test('create a valid record (MX)', function(t) {
         var record = new named.MXRecord('smtp.example.com');
         testRecord(record, t);
