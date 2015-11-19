@@ -1,24 +1,25 @@
 {
-        "name": "named",
-        "description": "DNS server library for node.js",
-        "version": "0.0.1",
-        "author": "trevoro <trevoro@gmail.com>",
-        "contributors": [
-                "Mark Cavage"
-        ],
-        "repository": {
-                "type": "git",
-                "url": "git://github.com/trevoro/node-named.git"
-        },
-        "main": "lib/index.js",
-        "engines": {
-                "node": ">=0.6"
-        },
-        "dependencies": {
-                "bunyan": "0.7.0",
-                "ipaddr.js": "0.1.1"
-        },
-        "devDependencies": {
-                "nodeunit": "0.9.0"
-        }
+  "name": "named",
+  "description": "DNS server library for node.js",
+  "version": "0.0.1",
+  "author": "trevoro <trevoro@gmail.com>",
+  "contributors": [
+    "Mark Cavage"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/trevoro/node-named.git"
+  },
+  "main": "lib/index.js",
+  "engines": {
+    "node": ">=0.6"
+  },
+  "dependencies": {
+    "bunyan": "0.7.0",
+    "ipaddr.js": "0.1.1"
+  },
+  "devDependencies": {
+    "nodeunit": "0.9.0"
+  },
+  "license": "MIT"
 }
