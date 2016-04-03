@@ -7,7 +7,7 @@ functionality that is in use today.
 
 
 ## Creating a DNS Server
-
+```javascript
     var named = require('./lib/index');
     var server = named.createServer();
     var ttl = 300;
@@ -23,7 +23,7 @@ functionality that is in use today.
       query.addAnswer(domain, target, ttl);
       server.send(query);
     });
-
+```
 ## Creating DNS Records
 
 node-named provides helper functions for creating DNS records. 
@@ -32,12 +32,12 @@ of ['A', 'AAAA', 'CNAME', 'SOA', 'MX', 'TXT, 'SRV']. It is important to
 remember that these DNS records are not permanently added to the server. 
 They only exist fo the length of the particular request. After that, they are
 destroyed. This means you have to create your own lookup mechanism.
-
+```javascript
     var named = require('node-named');
     
     var soaRecord = named.SOARecord('example.com', {serial: 201205150000});
     console.log(soaRecord);
-
+```
 ### Supported Record Types
 
 The following record types are supported
