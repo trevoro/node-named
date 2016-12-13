@@ -56,6 +56,17 @@ node-named uses [http://github.com/trentm/node-bunyan](bunyan) for logging.
 It's a lot nicer to use if you npm install bunyan and put the bunyan tool in
 your path. Otherwise, you will end up with JSON formatted log output by default.
 
+If you wish to set the log level that bunyan uses supply a log option when
+creating the server, like this:
+
+
+```javascript
+var named = require('./lib/index');
+var server = named.createServer({
+	log: 'error'
+});
+```
+
 ### Replacing the default logger
 
 You can pass in an alternate logger if you wish. If you do not, then it will use
