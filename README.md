@@ -30,7 +30,7 @@ node-named provides helper functions for creating DNS records.
 The records are available under 'named.record.NAME' where NAME is one
 of ['A', 'AAAA', 'CNAME', 'SOA', 'MX', 'TXT, 'SRV']. It is important to 
 remember that these DNS records are not permanently added to the server. 
-They only exist fo the length of the particular request. After that, they are
+They only exist for the length of the particular request. After that, they are
 destroyed. This means you have to create your own lookup mechanism.
 ```javascript
     var named = require('node-named');
