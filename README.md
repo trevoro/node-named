@@ -19,7 +19,7 @@ functionality that is in use today.
     server.on('query', function(query) {
       var domain = query.name();
       console.log('DNS Query: %s', domain)
-      var target = new SOARecord(domain, {serial: 12345});
+      var target = new named.SOARecord(domain, {serial: 12345});
       query.addAnswer(domain, target, ttl);
       server.send(query);
     });
