@@ -28,7 +28,7 @@ functionality that is in use today.
 
 node-named provides helper functions for creating DNS records. 
 The records are available under 'named.record.NAME' where NAME is one
-of ['A', 'AAAA', 'CNAME', 'SOA', 'MX', 'TXT, 'SRV']. It is important to 
+of ['A', 'AAAA', 'CNAME', 'SOA', 'MX', 'NS', 'TXT, 'SRV']. It is important to 
 remember that these DNS records are not permanently added to the server. 
 They only exist fo the length of the particular request. After that, they are
 destroyed. This means you have to create your own lookup mechanism.
@@ -47,6 +47,7 @@ The following record types are supported
  * CNAME (aliases)
  * SOA (start of authority)
  * MX (mail server records)
+ * NS (nameserver entries)
  * TXT (arbitrary text entries)
  * SRV (service discovery)
 
