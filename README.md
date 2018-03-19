@@ -35,7 +35,7 @@ destroyed. This means you have to create your own lookup mechanism.
 ```javascript
     var named = require('node-named');
     
-    var soaRecord = named.SOARecord('example.com', {serial: 201205150000});
+    var soaRecord = new named.SOARecord('example.com', {serial: 201205150000});
     console.log(soaRecord);
 ```
 ### Supported Record Types
