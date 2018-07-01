@@ -1,6 +1,6 @@
 {
-  "name": "named",
-  "description": "DNS server library for node.js",
+  "name": "node-named",
+  "description": "DNS server library for Node.js",
   "version": "0.0.1",
   "author": "trevoro <trevoro@gmail.com>",
   "contributors": [
@@ -12,7 +12,7 @@
   },
   "main": "lib/index.js",
   "engines": {
-    "node": ">=0.6"
+    "node": ">=9"
   },
   "dependencies": {
     "bunyan": "0.7.0",
