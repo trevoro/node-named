@@ -5,7 +5,8 @@ limited support for the DNS spec, but aims to implement all of the *common*
 functionality that is in use today. 
 
 ## Creating a DNS Server
-```javascript
+
+```js
     var named = require('./lib/index');
     var server = named.createServer();
     var ttl = 300;
@@ -31,7 +32,7 @@ of ['A', 'AAAA', 'CNAME', 'SOA', 'MX', 'NS', 'TXT, 'SRV']. It is important to
 remember that these DNS records are not permanently added to the server. 
 They only exist for the length of the particular request. After that, they are
 destroyed. This means you have to create your own lookup mechanism.
-```javascript
+```js
     var named = require('node-named');
     
     var soaRecord = new named.SOARecord('example.com', {serial: 201205150000});
@@ -53,15 +54,15 @@ The following record types are supported
 
 ## Logging
 
-node-named uses [http://github.com/trentm/node-bunyan](bunyan) for logging.
+node-named uses [bunyan](http://github.com/trentm/node-bunyan) for logging.
 It's a lot nicer to use if you npm install bunyan and put the bunyan tool in
 your path. Otherwise, you will end up with JSON formatted log output by default.
 
 ### Replacing the default logger
 
 You can pass in an alternate logger if you wish. If you do not, then it will use
-bunyan by default. Your logger must expose the functions 'info', 'debug',
-'warn', 'trace', 'error', and 'notice'.
+bunyan by default. Your logger must expose the functions `info`, `debug`,
+`warn`, `trace`, `error`, and `notice`.
 
 ### TODO
 

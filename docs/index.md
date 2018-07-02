@@ -18,54 +18,55 @@ pluggable storage mechanisms. This DNS server is good for creating services
 where your records may change frequently, or you would like to access records 
 stored in a central system using a mechanism of your choosing. 
 
-
 # Installation
 
-    $ npm install named
+`$ npm install named`
 
 # Server API
 
-    var named = require('./lib/index');
-    var server = named.createServer();
+```js
+var named = require('./lib/index');
+var server = named.createServer();
 
-    server.listen(9999, '127.0.0.1', function() {
-      console.log('DNS server started on port 9999');
-    });
+server.listen(9999, '127.0.0.1', function() {
+  console.log('DNS server started on port 9999');
+});
 
-    server.on('query', function(query) {
-      var domain = query.name();
-      var target = new named.SOARecord(domain, {serial: 12345});
-      // 300 is the ttl for this record
-      query.addAnswer(domain, target, 300);
-      server.send(query);
-    });
+server.on('query', function(query) {
+  var domain = query.name();
+  var target = new named.SOARecord(domain, {serial: 12345});
+  // 300 is the ttl for this record
+  query.addAnswer(domain, target, 300);
+  server.send(query);
+});
+```
 
 Hit this DNS server with `dig` to see some results. Because we are only 
 handling DNS responses for one record type (SOA or 'Start of Authority'), that 
 is the response we will see, regardless of the type we make a request for. Dig
 is nice about this.
+```
+$ dig @localhost -p9999 example.com SOA
 
-    $ dig @localhost -p9999 example.com SOA
+; <<>> DiG 9.7.3-P3 <<>> @localhost -p9999 example.com SOA
+; (3 servers found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 32739
+;; flags: qr rd; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
+;; WARNING: recursion requested but not available
 
-    ; <<>> DiG 9.7.3-P3 <<>> @localhost -p9999 example.com SOA
-    ; (3 servers found)
-    ;; global options: +cmd
-    ;; Got answer:
-    ;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 32739
-    ;; flags: qr rd; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
-    ;; WARNING: recursion requested but not available
+;; QUESTION SECTION:
+  ;example.com.   IN  SOA
 
-    ;; QUESTION SECTION:
-    ;example.com.                       IN      SOA
+;; ANSWER SECTION:
+  example.com.5   IN  SOA example.com. hostmaster.example.com. 12345 10 10 10 10
 
-    ;; ANSWER SECTION:
-    example.com.                5       IN      SOA     example.com. hostmaster.example.com. 12345 10 10 10 10
-
-    ;; Query time: 10 msec
-    ;; SERVER: ::1#9999(::1)
-    ;; WHEN: Wed May 23 19:24:09 2012
-    ;; MSG SIZE  rcvd: 109
-
+;; Query time: 10 msec
+;; SERVER: ::1#9999(::1)
+;; WHEN: Wed May 23 19:24:09 2012
+;; MSG SIZE  rcvd: 109
+```
 
 ## Named API
 
@@ -79,14 +80,15 @@ options is an object which may specify:
 - name: an optional name used to identify the server
 
 Here is an example a named server listening on port 53
+```js
+var named = require('named');
 
-    var named = require('named');
+var server = named.createServer({
+  name: 'named0'
+});
 
-    var server = named.createServer({
-      name: 'named0'
-    });
-
-    server.listen(53);
+server.listen(53);
+```
 
 ## Class: named.Server
 
@@ -301,6 +303,5 @@ DnsErrors are:
 Returns the message that was passed in to the error. The message is a string,
 and can be used for logging purposes
 
-## Server Properties
-
+<!--## Server Properties>
 
