@@ -4,8 +4,6 @@ Node-named is a lightweight DNS server written in pure javascript. It has
 limited support for the DNS spec, but aims to implement all of the *common*
 functionality that is in use today. 
 
-
-
 ## Creating a DNS Server
 ```javascript
     var named = require('./lib/index');
@@ -24,6 +22,7 @@ functionality that is in use today.
       server.send(query);
     });
 ```
+
 ## Creating DNS Records
 
 node-named provides helper functions for creating DNS records. 
@@ -38,6 +37,7 @@ destroyed. This means you have to create your own lookup mechanism.
     var soaRecord = new named.SOARecord('example.com', {serial: 201205150000});
     console.log(soaRecord);
 ```
+
 ### Supported Record Types
 
 The following record types are supported
