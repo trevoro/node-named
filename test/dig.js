@@ -11,9 +11,7 @@ var DIG = 'dig';
 ///--- Helpers
 
 function parseAnswer(tokens) {
-    var t = tokens.filter(function (v) {
-        return (v !== '' ? v : undefined);
-    });
+    var t = tokens.filter((v) => v !== '' ? v : undefined);
 
     var r = {
         name: t[0],
@@ -36,7 +34,7 @@ function parseDig(output) {
         authority: []
     };
 
-    lines.forEach(function (l) {
+    lines.forEach((l) => {
         if (l === '') {
             section = undefined;
         } else if (/^;; QUESTION SECTION:/.test(l)) {
@@ -49,20 +47,14 @@ function parseDig(output) {
             section = 'authority';
         }
 
-        if (section === 'question') {
-            if (/^;([A-Za-z0-9])*\./.test(l)) {
-                results.question =
-                    l.match(/([A-Za-z0-9_\-\.])+/)[0];
-            }
+        if (section === 'question' && /^;([A-Za-z0-9])*\./.test(l)) {
+            results.question = l.match(/([A-Za-z0-9_\-\.])+/)[0];
         }
 
-        if (section === 'answer') {
-            if (/^([_A-Za-z0-9])+/.test(l)) {
-                var tokens = l.match(/(.*)/)[0].split(/\t/);
-                var answer = parseAnswer(tokens);
-                if (answer)
-                    results.answers.push(answer);
-            }
+        if (section === 'answer' && /^([_A-Za-z0-9])+/.test(l)) {
+            var tokens = l.match(/(.*)/)[0].split(/\t/);
+            var answer = parseAnswer(tokens);
+            if (answer) results.answers.push(answer);
         }
     });
 
@@ -83,18 +75,18 @@ function dig(name, type, options, callback) {
 
     type = type.toUpperCase();
 
-    var opts = ''
+    var opts = '';
     if (options.server)
         opts += ' @' + options.server;
     if (options.port)
         opts += ' -p ' + options.port;
 
     var cmd = sprintf('dig %s -t %s %s +time=1 +retry=0', opts, type, name);
-    exec(cmd, function (err, stdout, stderr) {
+    exec(cmd, (err, stdout, stderr) => {
         if (err)
-            return (callback(err));
+            return callback(err);
 
-        return (callback(null, parseDig(stdout)));
+        return callback(null, parseDig(stdout));
     });
 }
 

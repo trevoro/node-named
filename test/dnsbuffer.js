@@ -37,13 +37,12 @@ var samples = [
 ];
 
 function encode(data) {
-    var tokens, buffer, pos = 0;
-
     if (typeof (data) !== 'string')
         throw new TypeError('data (string) is required');
 
-    tokens = data.split(/\s/);
-    buffer = new Buffer(tokens.length);
+    var tokens = data.split(/\s/),
+        buffer = new Buffer(tokens.length),
+        pos = 0;
 
     for (i in tokens) {
         var t = '0x' + tokens[i];
@@ -54,9 +53,9 @@ function encode(data) {
 }
 
 function encodeSamples(samples) {
-    var sample, results = [];
+    var results = [];
     for (i in samples) {
-        sample = samples[i];
+        var sample = samples[i];
         sample.raw = encode(sample.data);
         results.push(sample);
     }
@@ -64,17 +63,13 @@ function encodeSamples(samples) {
 }
 
 function equalBuffers(b1, b2) {
-    if (b1.length !== b2.length) {
-        return false;
-    }
+    if (b1.length !== b2.length) return false;
 
     var l = b1.length;
     while (l--) {
         var one = b1.readUInt8(l);
         var two = b2.readUInt8(l);
-        if (one !== two) {
-            return false;
-        }
+        if (one !== two) return false;
     }
     return true;
 }

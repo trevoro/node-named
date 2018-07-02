@@ -11,16 +11,19 @@ var test = helper.test;
 var before = helper.before;
 var after = helper.after;
 
-var options = {port: 9999, server: '::1'};
+var options = {
+    port: 9999,
+    server: '::1'
+};
 
 ///--- Tests
 
-before(function (callback) {
+before((callback) => {
     this.server = named.createServer({
         log: helper.getLog('server')
     });
 
-    this.server.on('query', function (query) {
+    this.server.on('query', (query) => {
         var domain = query.name()
         var type = query.type();
 
@@ -61,40 +64,40 @@ before(function (callback) {
         query.respond();
     });
 
-    this.server.listen(options.port, options.server, function () {
+    this.server.listen(options.port, options.server, () => {
         process.nextTick(callback);
     });
 });
 
-after(function (callback) {
+after((callback) => {
     this.server.close(callback);
 });
 
-test('listen and close (port only)', function (t) {
+test('listen and close (port only)', (t) => {
     // don't conflict with the server made in 'before'
     var server = named.createServer();
-    server.listen(1153, function () {
-        process.nextTick(function () {
-            server.close(function () {
+    server.listen(1153, () => {
+        process.nextTick(() => {
+            server.close(() => {
                 t.end();
             })
         });
     });
 });
 
-test('listen and close (port and ::1)', function (t) {
+test('listen and close (port and ::1)', (t) => {
     var server = named.createServer();
-    server.listen(String(1153), '::1', function () {
-        process.nextTick(function () {
-            server.close(function () {
+    server.listen(String(1153), '::1', () => {
+        process.nextTick(() => {
+            server.close(() => {
                 t.end();
             })
         });
     });
 });
 
-test('answer query: example.com (A)', function (t) {
-    dig('example.com', 'A', options, function (err, results) {
+test('answer query: example.com (A)', (t) => {
+    dig('example.com', 'A', options, (err, results) => {
         t.ifError(err);
         t.deepEqual(results.answers, [{
             name: 'example.com.',
@@ -105,8 +108,8 @@ test('answer query: example.com (A)', function (t) {
     });
 });
 
-test('answer query: example.com (AAAA)', function (t) {
-    dig('example.com', 'AAAA', options, function (err, results) {
+test('answer query: example.com (AAAA)', (t) => {
+    dig('example.com', 'AAAA', options, (err, results) => {
         t.ifError(err);
         t.deepEqual(results.answers, [{
             name: 'example.com.',
@@ -117,8 +120,8 @@ test('answer query: example.com (AAAA)', function (t) {
     });
 });
 
-test('answer query: example.com (CNAME)', function (t) {
-    dig('www.example.com', 'CNAME', options, function (err, results) {
+test('answer query: example.com (CNAME)', (t) => {
+    dig('www.example.com', 'CNAME', options, (err, results) => {
         t.ifError(err);
         t.deepEqual(results.answers, [{
             name: 'www.example.com.',
@@ -130,8 +133,8 @@ test('answer query: example.com (CNAME)', function (t) {
     });
 });
 
-test('answer query: example.com (NS)', function (t) {
-    dig('example.com', 'NS', options, function (err, results) {
+test('answer query: example.com (NS)', (t) => {
+    dig('example.com', 'NS', options, (err, results) => {
         t.ifError(err);
         t.deepEqual(results.answers, [{
             name: 'example.com.',
@@ -143,8 +146,8 @@ test('answer query: example.com (NS)', function (t) {
     });
 });
 
-test('answer query: example.com (MX)', function (t) {
-    dig('example.com', 'MX', options, function (err, results) {
+test('answer query: example.com (MX)', (t) => {
+    dig('example.com', 'MX', options, (err, results) => {
         t.ifError(err);
         t.deepEqual(results.answers, [{
             name: 'example.com.',
@@ -156,8 +159,8 @@ test('answer query: example.com (MX)', function (t) {
     });
 });
 
-test('answer query: example.com (SOA)', function (t) {
-    dig('example.com', 'SOA', options, function (err, results) {
+test('answer query: example.com (SOA)', (t) => {
+    dig('example.com', 'SOA', options, (err, results) => {
         t.ifError(err);
         t.deepEqual(results.answers, [{
             name: 'example.com.',
@@ -169,8 +172,8 @@ test('answer query: example.com (SOA)', function (t) {
     });
 });
 
-test('answer query: example.com (SRV)', function (t) {
-    dig('_sip._tcp.example.com', 'SRV', options, function (err, results) {
+test('answer query: example.com (SRV)', (t) => {
+    dig('_sip._tcp.example.com', 'SRV', options, (err, results) => {
         t.ifError(err);
         t.deepEqual(results.answers, [{
             name: '_sip._tcp.example.com.',
@@ -182,8 +185,8 @@ test('answer query: example.com (SRV)', function (t) {
     });
 });
 
-test('answer query: example.com (TXT)', function (t) {
-    dig('example.com', 'TXT', options, function (err, results) {
+test('answer query: example.com (TXT)', (t) => {
+    dig('example.com', 'TXT', options, (err, results) => {
         t.ifError(err);
         t.deepEqual(results.answers, [{
             name: 'example.com.',

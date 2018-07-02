@@ -9,9 +9,10 @@ var test = helper.test;
 var before = helper.before;
 var after = helper.after;
 
-var raw, src;
+var raw,
+    src;
 
-before(function (callback) {
+before((callback) => {
     try {
         raw = {
             buf: dnsBuffer.samples[0].raw,
@@ -31,18 +32,18 @@ before(function (callback) {
     }
 });
 
-test('decode a query datagram', function (t) {
+test('decode a query datagram', (t) => {
     var query = named.Query.parse(raw, src);
     t.end();
 });
 
-test('create a new query object', function (t) {
+test('create a new query object', (t) => {
     var decoded = named.Query.parse(raw, src);
     var query = named.Query.createQuery(decoded);
     t.end();
 });
 
-test('encode an null-response query object', function (t) {
+test('encode an null-response query object', (t) => {
     var decoded = named.Query.parse(raw, src);
     var query = named.Query.createQuery(decoded);
     query.encode();

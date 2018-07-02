@@ -36,7 +36,7 @@ var toTest = {
     ]
 };
 
-test('testing validator (nsName)', function (t) {
+test('testing validator (nsName)', (t) => {
     var k = 'nsName';
     for (var i in toTest.k) {
         var s = toTest.k[i][0];
@@ -47,7 +47,7 @@ test('testing validator (nsName)', function (t) {
     t.end();
 });
 
-test('testing validator (UInt32BE)', function (t) {
+test('testing validator (UInt32BE)', (t) => {
     var k = 'UInt32BE';
     for (var i in toTest.k) {
         var s = toTest.k[i][0];
@@ -58,7 +58,7 @@ test('testing validator (UInt32BE)', function (t) {
     t.end();
 });
 
-test('testing validator (UInt16BE)', function (t) {
+test('testing validator (UInt16BE)', (t) => {
     var k = 'UInt16BE';
     for (var i in toTest.k) {
         var s = toTest.k[i][0];
@@ -69,7 +69,7 @@ test('testing validator (UInt16BE)', function (t) {
     t.end();
 });
 
-test('testing validator (nsText)', function (t) {
+test('testing validator (nsText)', (t) => {
     var k = 'nsText';
     for (var i in toTest.k) {
         var s = toTest.k[i][0];
