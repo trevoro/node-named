@@ -1,6 +1,6 @@
 {
-  "name": "named",
-  "description": "DNS server library for node.js",
+  "name": "node-named",
+  "description": "DNS server library for Node.js",
   "version": "0.0.1",
   "author": "trevoro <trevoro@gmail.com>",
   "contributors": [
@@ -12,14 +12,14 @@
   },
   "main": "lib/index.js",
   "engines": {
-    "node": ">=0.6"
+    "node": ">=8"
   },
   "dependencies": {
-    "bunyan": "0.7.0",
-    "ipaddr.js": "0.1.1"
+    "bunyan": "^0.7.0",
+    "ipaddr.js": "^0.1.9"
   },
   "devDependencies": {
-    "nodeunit": "0.9.0"
+    "nodeunit": "^0.9.0"
   },
   "license": "MIT"
 }
