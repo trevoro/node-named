@@ -4,11 +4,15 @@ Node-named is a lightweight DNS server written in pure javascript. It has
 limited support for the DNS spec, but aims to implement all of the *common*
 functionality that is in use today. 
 
+## Installing node-named
 
+```
+$ npm install node-named
+```
 
 ## Creating a DNS Server
 ```javascript
-    var named = require('./lib/index');
+    var named = require('node-named');
     var server = named.createServer();
     var ttl = 300;
 
@@ -28,7 +32,7 @@ functionality that is in use today.
 
 node-named provides helper functions for creating DNS records. 
 The records are available under 'named.record.NAME' where NAME is one
-of ['A', 'AAAA', 'CNAME', 'SOA', 'MX', 'NS', 'TXT, 'SRV']. It is important to 
+of `['A', 'AAAA', 'CNAME', 'SOA', 'MX', 'NS', 'TXT, 'SRV']`. It is important to 
 remember that these DNS records are not permanently added to the server. 
 They only exist for the length of the particular request. After that, they are
 destroyed. This means you have to create your own lookup mechanism.
