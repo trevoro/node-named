@@ -1,5 +1,5 @@
 {
-  "name": "named",
+  "name": "node-named",
   "description": "DNS server library for node.js",
   "version": "0.0.1",
   "author": "trevoro <trevoro@gmail.com>",
