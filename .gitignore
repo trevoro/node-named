@@ -1,5 +1,9 @@
-.DS_Store
+# Files
 *.swmp
-node_modules
 npm-debug.log
-tmp
+
+# Folders
+tmp/
+node_modules/
+.DS_Store/
+.vs/
