@@ -4,6 +4,9 @@ Node-named is a lightweight DNS server written in pure javascript. It has
 limited support for the DNS spec, but aims to implement all of the *common*
 functionality that is in use today. 
 
+** This project is not actively maintained **
+I've received a lot of great PRs for this project, but I don't have the capacity to actively maintain this library at the moment. I feel strongly about maintaining backwards compatibility for people who rely on it, so any PRs would also need to adhere to keeping the API sane, or contribute to some improvement in performance.
+
 
 
 ## Creating a DNS Server
@@ -78,3 +81,8 @@ or were never implemented. This server aims to be RFC compliant, but does not
 implement any other protocol other than INET (the one we're all used to), and
 only supports a handful of record types (the ones that are in use on a regular
 basis).
+
+## Looking up Records
+
+There are a few handy ways to lookup DNS records in node. 
+https://github.com/LCMApps/dns-lookup-cache
