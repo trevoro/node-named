@@ -1,5 +1,5 @@
 NODEUNIT 	:= ./node_modules/.bin/nodeunit
-BUNYAN 		:= ./node_modules/.bin/bunyan
+BUNYAN 		:= ./node_modules/bunyan/bin/bunyan
 NPM 		:= $(shell which npm)
 
 .PHONY: setup

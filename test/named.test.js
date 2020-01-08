@@ -49,6 +49,10 @@ before(function (callback) {
                         var record = new named.MXRecord('smtp.example.com');
                         query.addAnswer(domain, record);
                         break;
+                case 'PTR':
+                        var record = new named.PTRRecord('rdns.example.com');
+                        query.addAnswer(domain, record);
+                        break;
                 case 'SOA':
                         var record = new named.SOARecord('example.com');
                         query.addAnswer(domain, record);
@@ -168,6 +172,19 @@ test('answer query: example.com (MX)', function (t) {
 });
 
 
+test('answer query: example.com (PTR)', function (t) {
+        dig('1.0.0.127.in-addr.arpa', 'PTR', options, function (err, results) {
+                t.ifError(err);
+                t.deepEqual(results.answers, [{
+                        name: '1.0.0.127.in-addr.arpa.',
+                        ttl: 5,
+                        type: 'PTR',
+                        target: 'rdns.example.com.'
+                }]);
+                t.end();
+        });
+});
+
 test('answer query: example.com (SOA)', function (t) {
         dig('example.com', 'SOA', options, function (err, results) {
                 t.ifError(err);
@@ -180,7 +197,6 @@ test('answer query: example.com (SOA)', function (t) {
                 t.end();
         });
 });
-
 
 test('answer query: example.com (SRV)', function (t) {
         dig('_sip._tcp.example.com', 'SRV', options, function (err, results) {

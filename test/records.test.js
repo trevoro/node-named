@@ -45,6 +45,11 @@ test('create a valid record (MX)', function(t) {
         testRecord(record, t);
 });
 
+test('create a valid record (PTR)', function(t) {
+        var record = new named.PTRRecord('rdns.example.com');
+        testRecord(record, t);
+});
+
 test('create a valid record (SOA)', function(t) {
         var record = new named.SOARecord('example.com');
         testRecord(record, t);

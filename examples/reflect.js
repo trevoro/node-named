@@ -26,6 +26,10 @@ server.on('query', function(query) {
                 var record = new named.MXRecord('smtp.example.com');
                 query.addAnswer(domain, record, 300);
                 break;
+        case 'PTR':
+                var record = new named.PTRRecord('rdns.example.com');
+                query.addAnswer(domain, record, 300);
+                break;
         case 'SOA':
                 var record = new named.SOARecord('example.com');
                 query.addAnswer(domain, record, 300);
