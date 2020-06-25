@@ -22,6 +22,10 @@ server.on('query', function(query) {
                 var record = new named.CNAMERecord('cname.example.com');
                 query.addAnswer(domain, record, 300);
                 break;
+        case 'PTR':
+                var record = new named.PTRRecord('ptr.example.com');
+                query.addAnswer(domain, record, 300);
+                break;
         case 'MX':
                 var record = new named.MXRecord('smtp.example.com');
                 query.addAnswer(domain, record, 300);

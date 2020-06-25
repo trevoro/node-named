@@ -41,6 +41,10 @@ before(function (callback) {
                         var record = new named.CNAMERecord('cname.example.com');
                         query.addAnswer(domain, record);
                         break;
+                case 'PTR':
+                        var record = new named.PTRRecord('ptr.example.com');
+                        query.addAnswer(domain, record);
+                        break;
                 case 'NS':
                         var record = new named.NSRecord('ns.example.com');
                         query.addAnswer(domain, record);
@@ -135,6 +139,19 @@ test('answer query: example.com (CNAME)', function (t) {
                         ttl: 5,
                         type: 'CNAME',
                         target: 'cname.example.com.'
+                }]);
+                t.end();
+        });
+});
+
+test('answer query: example.com (PTR)', function (t) {
+        dig('example.com', 'PTR', options, function (err, results) {
+                t.ifError(err);
+                t.deepEqual(results.answers, [{
+                        name: 'example.com.',
+                        ttl: 5,
+                        type: 'PTR',
+                        target: 'ptr.example.com.'
                 }]);
                 t.end();
         });

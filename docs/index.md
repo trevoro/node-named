@@ -243,6 +243,11 @@ Create an IPv6 resource record.
 Create an Alias record. When these records are sent to the client, the client
 will often make an additional request for the alias itself.
 
+### named.PTRRecord(target)
+
+Create an Alias record. When these records are sent to the client, the client
+will often make an additional request for the alias itself.
+
 ### named.MXRecord(exchange, options)
 
 Create a Mail Server record. A client making this request will often make an
