@@ -26,6 +26,10 @@ server.on('query', function(query) {
   query.addAnswer(domain, target, ttl);
   server.send(query);
 });
+
+server.on('error', function(e) {
+  console.log('server error', e);
+});
 ```
 ## Creating DNS Records
 
