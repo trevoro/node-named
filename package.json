@@ -1,25 +1,56 @@
 {
-  "name": "named",
-  "description": "DNS server library for node.js",
-  "version": "0.0.1",
-  "author": "trevoro <trevoro@gmail.com>",
+  "name": "denamed",
+  "description": "Pure JS lightweight, fully typed DNS server library",
+  "version": "1.0.10",
+  "author": {
+    "name": "IdiotWorks"
+  },
+  "keywords": [
+    "dns",
+    "dns server",
+    "typescript"
+  ],
   "contributors": [
-    "Mark Cavage"
+    {
+      "name": "trevoro",
+      "email": "trevoro@gmail.com",
+      "url": "https://github.com/trevoro"
+    },
+    {
+      "name": "Mark Cavage"
+    }
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/trevoro/node-named.git"
+    "url": "git://github.com/idiotworks/denamed.git"
   },
-  "main": "lib/index.js",
+  "bugs": {
+    "url": "https://github.com/idiotworks/denamed/issues"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "postinstall": "husky install"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "engines": {
-    "node": ">=0.6"
+    "node": ">=14"
   },
   "dependencies": {
-    "bunyan": "0.7.0",
-    "ipaddr.js": "0.1.1"
+    "ipaddr.js": "2.0.0"
   },
   "devDependencies": {
-    "nodeunit": "0.9.0"
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.27",
+    "eslint": "^7.20.0",
+    "husky": "^5.0.9",
+    "jest": "^26.6.3",
+    "prettier": "^2.2.1",
+    "pretty-quick": "^3.1.0",
+    "ts-jest": "^26.5.1",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.5"
   },
   "license": "MIT"
 }
