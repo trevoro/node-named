@@ -10,14 +10,13 @@ many other DNS servers node-named does not attempt to manage DNS records for
 you. You simply get a request, build your response based on whatever criteria
 you desire, and then send that response back to the client.
 
-## Seriously?  
+## Seriously?
 
 Actually this is quite useful. Both BIND and PowerDNS assume that records never
 change, and are not designed to be manipulated using an API or have elegant
 pluggable storage mechanisms. This DNS server is good for creating services
-where your records may change frequently, or you would like to access records 
-stored in a central system using a mechanism of your choosing. 
-
+where your records may change frequently, or you would like to access records
+stored in a central system using a mechanism of your choosing.
 
 # Installation
 
@@ -40,8 +39,8 @@ stored in a central system using a mechanism of your choosing.
       server.send(query);
     });
 
-Hit this DNS server with `dig` to see some results. Because we are only 
-handling DNS responses for one record type (SOA or 'Start of Authority'), that 
+Hit this DNS server with `dig` to see some results. Because we are only
+handling DNS responses for one record type (SOA or 'Start of Authority'), that
 is the response we will see, regardless of the type we make a request for. Dig
 is nice about this.
 
@@ -65,7 +64,6 @@ is nice about this.
     ;; SERVER: ::1#9999(::1)
     ;; WHEN: Wed May 23 19:24:09 2012
     ;; MSG SIZE  rcvd: 109
-
 
 ## Named API
 
@@ -102,8 +100,8 @@ to the listen event, when the server is listening.
 ### server.send(queryResponse)
 
 Sends a `queryResponse` message. The queryResponse includes information about
-the client in the object itself. The `send` function will encode the message 
-and send the response to the appropriate client. Unsolicited DNS messages are 
+the client in the object itself. The `send` function will encode the message
+and send the response to the appropriate client. Unsolicited DNS messages are
 not permitted. This function should only be used within the `query` event.
 
 **Note** If you do not add any answers to your query, then the `send()` method
@@ -118,14 +116,14 @@ will be attached to the underlying socket `close` event.
 
 `function() { }`
 
-Emitted once, when the server starts listening on the specified `port` and 
+Emitted once, when the server starts listening on the specified `port` and
 `host`
 
 ### Event: 'query'
 
 `function (query) { }`
 
-Emitted each time there is valid request. `query` is an instance of 
+Emitted each time there is valid request. `query` is an instance of
 `named.Query`
 
 ### Event: 'clientError'
@@ -134,9 +132,9 @@ Emitted each time there is valid request. `query` is an instance of
 
 Emitted when there is an invalid DNS request. This may be caused by a bad UDP
 datagram, or some other malformed DNS request. Parser errors are not included
-here. 
+here.
 
-`error` is an instance of `named.DnsError` 
+`error` is an instance of `named.DnsError`
 
 ### Event: 'uncaughtException'
 
@@ -144,7 +142,7 @@ here.
 
 Emitted when there is an uncaught exception somewhere in the protocol stack.
 
-`error` is an instance of `named.DnsError` 
+`error` is an instance of `named.DnsError`
 
 ### Event: 'after'
 
@@ -153,7 +151,7 @@ Emitted when there is an uncaught exception somewhere in the protocol stack.
 Emitted after a `query` is sent to a client. This can be used for logging
 purposes.
 
-`query` is an instance of `named.Query` 
+`query` is an instance of `named.Query`
 `bytes` is the number of bytes sent over the wire to the client
 
 ## Class: named.Query
@@ -188,7 +186,7 @@ Name is the name you want to respond with (in 99.99% of cases, the
 query.name()), record is the record instance, and type is the type of record you
 are responding with. In most cases this will be what the query.type() returns,
 but for instances like an 'A' or 'AAAA' request you may elect to respond with a
-CNAME record. 
+CNAME record.
 
 ### query.operation()
 
@@ -202,15 +200,14 @@ Encodes the query and stores the results as a `buffer` in the query itself.
 This function should never need to be invoked, as the `server.send` function
 will automatically encode a query prior to being sent to the client.
 
-
 ## Records
 
-A DNS query is a question posed to a server about a record for a specific 
+A DNS query is a question posed to a server about a record for a specific
 domain. The questions are for specific 'types' of records. Of the types listed
-in all of the DNS RFCs only some are still in use, and even fewer are 
-frequently used. Each type of request has an appropriate response, each of 
-which have different formats. These response formats are known as 
-"Resource Records" or for the sake of named, just 'Records'. 
+in all of the DNS RFCs only some are still in use, and even fewer are
+frequently used. Each type of request has an appropriate response, each of
+which have different formats. These response formats are known as
+"Resource Records" or for the sake of named, just 'Records'.
 
 All records in named are created using the `new` keyword.
 
@@ -250,6 +247,7 @@ additional request for the entries in these records.
 `exchange` is the name of the mailserver that handles mail for this domain.
 
 Options:
+
 - `ttl`: The time-to-live for this particular mail server record
 - `priority`: The priority of this mailserver over other mailservers. You may
   have multiple mail servers. Lowest priority server is selected by client.
@@ -261,11 +259,12 @@ Create a Server Resource record.
 `port` is the tcp/udp port where the service may be reached
 
 Options:
+
 - `weight`: Used by the client for selecting between multiple results. Higher
   weight wins. Default is 10
 - `priority`: Used by the client for selecting between mutiple results. Higher
   priortiy wins. Default is 10
-  
+
 ### named.TXTRecord(target)
 
 Create a text resource record.
@@ -281,14 +280,15 @@ valid.
 ## DnsError
 
 DnsErrors rae objects that consist of:
+
 - `code`: A unique error number
 - `name`: the name of the error
 
 DnsErrors are:
 
-- `NoError` 
+- `NoError`
 - `ProtocolError`
-- `CannotProcessError` 
+- `CannotProcessError`
 - `NoNameError`
 - `NotImplementedError`
 - `RefusedError`
@@ -302,5 +302,3 @@ Returns the message that was passed in to the error. The message is a string,
 and can be used for logging purposes
 
 ## Server Properties
-
-

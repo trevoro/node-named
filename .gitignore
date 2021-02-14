@@ -3,3 +3,6 @@
 node_modules
 npm-debug.log
 tmp
+.idea
+.publish
+dist

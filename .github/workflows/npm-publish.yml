@@ -1,0 +1,36 @@
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
+
+name: Node.js Package
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - uses: bahmutov/npm-install@v1
+      - run: yarn test
+
+  publish-npm:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+          registry-url: https://registry.npmjs.org/
+      - uses: bahmutov/npm-install@v1
+      - run: yarn build
+      - run: mkdir .publish && cp -r dist .publish/dist && cp README.md .publish/ && cp LICENSE .publish/
+      - run: node -e 'const fs = require("fs");const pkg = JSON.parse(fs.readFileSync("package.json","utf-8"));fs.writeFileSync(".publish/package.json",JSON.stringify({...pkg,scripts:undefined,devDependencies:undefined},null,2))'
+      - run: cd .publish && npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
