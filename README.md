@@ -1,4 +1,5 @@
 # `denamed` - _Pure JS DNS Server_
+![Node.js Package](https://github.com/idiotworks/denamed/workflows/Node.js%20Package/badge.svg)
 
 A lightweight, strongly typed DNS server library for deploying a highly configurable DNS server across platforms.
 

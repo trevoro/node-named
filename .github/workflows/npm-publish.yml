@@ -15,7 +15,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - uses: bahmutov/npm-install@v1
+      - uses: bahmutov/npm-install@v1.6.0
       - run: yarn test
 
   publish-npm:
@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: 14
           registry-url: https://registry.npmjs.org/
-      - uses: bahmutov/npm-install@v1
+      - uses: bahmutov/npm-install@v1.6.0
       - run: yarn build
       - run: mkdir .publish && cp -r dist .publish/dist && cp README.md .publish/ && cp LICENSE .publish/
       - run: node -e 'const fs = require("fs");const pkg = JSON.parse(fs.readFileSync("package.json","utf-8"));fs.writeFileSync(".publish/package.json",JSON.stringify({...pkg,scripts:undefined,devDependencies:undefined},null,2))'
