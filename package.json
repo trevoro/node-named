@@ -1,7 +1,7 @@
 {
   "name": "denamed",
   "description": "Pure JS lightweight, fully typed DNS server library",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "author": {
     "name": "IdiotWorks"
   },
