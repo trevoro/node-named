@@ -1,7 +1,7 @@
 {
   "name": "njord-ns-server",
   "description": "DNS server library for node.js",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "author": "Csaba Tibor Toth csaba.tibor.toth@outlook.com",
   "contributors": [],
   "repository": {
@@ -9,15 +9,15 @@
     "url": "https://github.com/csabatibortoth/njord-ns-server.git"
   },
   "main": "lib/index.js",
+  "scripts": {
+    "test": "node --test \"test/*.test.js\""
+  },
   "engines": {
-    "node": ">=0.6"
+    "node": ">=20"
   },
   "dependencies": {
-    "bunyan": "0.7.0",
-    "ipaddr.js": "0.1.1"
-  },
-  "devDependencies": {
-    "nodeunit": "0.9.0"
+    "bunyan": "^1.8.15",
+    "ipaddr.js": "^2.5.0"
   },
   "license": "MIT"
 }

@@ -21,67 +21,40 @@
 
 */
 
-var samples = [
-        {
-                id: 0,
-                description: 'query ns1.joyent.dev (A)',
-                data: "0f 34 01 00 00 01 00 00 00 00 00 00 03 6e 73 31 06 6a 6f 79 65 " +
-                        "6e 74 03 64 65 76 00 00 01 00 01",
-                type: 'queryMessage'
-        },
-        {
-                id: 1,
-                description: 'query ns1.joyent.dev (AAAA)',
-                data: "b9 dd 01 00 00 01 00 00 00 00 00 00 03 6e 73 31 06 6a 6f 79 65 " +
-                        "6e 74 03 64 65 76 00 00 1c 00 01",
-                type: 'queryMessage'
-        }
+'use strict';
+
+const samples = [
+  {
+    id: 0,
+    description: 'query ns1.joyent.dev (A)',
+    data: '0f 34 01 00 00 01 00 00 00 00 00 00 03 6e 73 31 06 6a 6f 79 65 ' +
+      '6e 74 03 64 65 76 00 00 01 00 01',
+    type: 'queryMessage'
+  },
+  {
+    id: 1,
+    description: 'query ns1.joyent.dev (AAAA)',
+    data: 'b9 dd 01 00 00 01 00 00 00 00 00 00 03 6e 73 31 06 6a 6f 79 65 ' +
+      '6e 74 03 64 65 76 00 00 1c 00 01',
+    type: 'queryMessage'
+  }
 ];
 
+// turns a string of space separated hex bytes into a buffer
 function encode(data) {
-        var tokens, buffer, pos = 0;
+  if (typeof (data) !== 'string')
+    throw new TypeError('data (string) is required');
 
-        if (typeof(data) !== 'string')
-                throw new TypeError('data (string) is required');
-
-        tokens = data.split(/\s/);
-        buffer = new Buffer(tokens.length);
-
-        for (i in tokens) {
-                var t = '0x' + tokens[i];
-                var v = parseInt(t);
-                buffer.writeInt8(v, pos++, true);
-        }
-        return buffer;
+  return Buffer.from(data.replace(/\s+/g, ''), 'hex');
 }
 
-function encodeSamples(samples) {
-        var sample, results = [];
-        for (i in samples) {
-                sample = samples[i];
-                sample.raw = encode(sample.data);
-                results.push(sample);
-        }
-        return results;
-}
-
-function equalBuffers(b1, b2) {
-        if (b1.length !== b2.length) {
-                return false;
-        }
-
-        var l = b1.length;
-        while (l--) {
-                var one = b1.readUInt8(l);
-                var two = b2.readUInt8(l);
-                if (one !== two) {
-                        return false;
-                }
-        }
-        return true;
-}
+for (const sample of samples)
+  sample.raw = encode(sample.data);
 
 module.exports = {
-        samples: encodeSamples(samples),
-        equalBuffers: equalBuffers
-}
+  samples: samples,
+  encode: encode,
+  equalBuffers: function equalBuffers(b1, b2) {
+    return b1.equals(b2);
+  }
+};
