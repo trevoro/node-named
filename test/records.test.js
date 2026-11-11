@@ -1,61 +1,69 @@
-var named = require('../lib');
+'use strict';
 
-if (require.cache[__dirname + '/helper.js'])
-        delete require.cache[__dirname + '/helper.js']
-var helper = require('./helper');
+const assert = require('node:assert/strict');
+const test = require('node:test');
 
-var test = helper.test;
+const named = require('../lib');
 
-var testRecord = function(record, t) {
-        if (!record)
-                t.ok(false, 'record could not be created');
+const valid = {
+  A: () => new named.ARecord('127.0.0.1'),
+  AAAA: () => new named.AAAARecord('::1'),
+  CNAME: () => new named.CNAMERecord('alias.example.com'),
+  NS: () => new named.NSRecord('ns.example.com'),
+  MX: () => new named.MXRecord('smtp.example.com'),
+  SOA: () => new named.SOARecord('example.com'),
+  SRV: () => new named.SRVRecord('_sip._udp.example.com', 5060),
+  TXT: () => new named.TXTRecord('hello world')
+};
 
-        if (record && record.valid()) {
-                t.ok(true, 'valid record created');
-        }
-        else {
-                t.ok(false, 'record was not valid');
-        }
+const invalid = {
+  A: () => new named.ARecord('::1'),
+  AAAA: () => new named.AAAARecord('127.0.0.1'),
+  CNAME: () => new named.CNAMERecord('not a hostname'),
+  NS: () => new named.NSRecord('-ns.example.com'),
+  MX: () => new named.MXRecord('smtp.example.com', {priority: 65536}),
+  SOA: () => new named.SOARecord('example.com', {serial: -1}),
+  SRV: () => new named.SRVRecord('sip.example.com', 65536),
+  TXT: () => new named.TXTRecord('a'.repeat(256))
+};
 
-        t.end()
+for (const type of Object.keys(valid)) {
+  test('create a valid record (' + type + ')', () => {
+    const record = valid[type]();
+    assert.equal(record._type, type);
+    assert.equal(record.valid(), true);
+  });
+
+  test('detect an invalid record (' + type + ')', () => {
+    assert.equal(invalid[type]().valid(), false);
+  });
+
+  test('require the record data (' + type + ')', () => {
+    assert.throws(() => new named[type + 'Record'](), TypeError);
+  });
 }
 
-test('create a valid record (A)', function(t) {
-        var record = new named.ARecord('127.0.0.1');
-        testRecord(record, t);
-});
+test('record defaults', () => {
+  const opts = {serial: 12345};
+  const soa = new named.SOARecord('example.com', opts);
+  assert.deepEqual({ ...soa }, {
+    host: 'example.com',
+    admin: 'hostmaster.example.com',
+    serial: 12345,
+    refresh: 10,
+    retry: 10,
+    expire: 10,
+    ttl: 10,
+    _type: 'SOA'
+  });
+  // the options of the caller are left alone
+  assert.deepEqual(opts, {serial: 12345});
 
-test('create a valid record (AAAA)', function(t) {
-        var record = new named.AAAARecord('::1');
-        testRecord(record, t);
-});
+  const mx = new named.MXRecord('smtp.example.com');
+  assert.equal(mx.priority, 0);
+  assert.equal(mx.ttl, 600);
 
-test('create a valid record (CNAME)', function(t) {
-        var record = new named.CNAMERecord('alias.example.com');
-        testRecord(record, t);
-});
-
-test('create a valid record (NS)', function(t) {
-        var record = new named.NSRecord('ns.example.com');
-        testRecord(record, t);
-});
-
-test('create a valid record (MX)', function(t) {
-        var record = new named.MXRecord('smtp.example.com');
-        testRecord(record, t);
-});
-
-test('create a valid record (SOA)', function(t) {
-        var record = new named.SOARecord('example.com');
-        testRecord(record, t);
-});
-
-test('create a valid record (SRV)', function(t) {
-        var record = new named.SRVRecord('_sip._udp.example.com', 5060);
-        testRecord(record, t);
-});
-
-test('create a valid record (TXT)', function(t) {
-        var record = new named.TXTRecord('hello world');
-        testRecord(record, t);
+  const srv = new named.SRVRecord('sip.example.com', 5060, {priority: 1});
+  assert.equal(srv.priority, 1);
+  assert.equal(srv.weight, 10);
 });

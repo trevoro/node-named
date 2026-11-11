@@ -1,15 +1,17 @@
-var named = require('../lib');
-var server = named.createServer();
+'use strict';
 
-server.listen(53, '127.0.0.1', function() {
-  console.log('DNS server started on port 9999');
+const named = require('../lib');
+
+const PORT = 9999;
+const server = named.createServer();
+
+server.listen(PORT, '127.0.0.1', () => {
+  console.log('DNS server started on port %d', PORT);
 });
 
-console.log(named.SoaRecord);
-
-server.on('query', function(query) {
-  var domain = query.name();
-  var record = new named.SOARecord(domain, {serial: 12345, ttl: 300});
+server.on('query', (query) => {
+  const domain = query.name();
+  const record = new named.SOARecord(domain, {serial: 12345, ttl: 300});
   query.addAnswer(domain, record, 300);
   server.send(query);
 });

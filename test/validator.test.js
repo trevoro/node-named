@@ -1,81 +1,78 @@
-var validators = require('../lib/validators');
+'use strict';
 
-if (require.cache[__dirname + '/helper.js'])
-        delete require.cache[__dirname + '/helper.js']
-var helper = require('./helper');
+const assert = require('node:assert/strict');
+const test = require('node:test');
 
-var test = helper.test;
+const validators = require('../lib/validators');
 
-var toTest = {
-        nsName: [
-                [ 'example.com', true ],
-                [ '0example.com', true ],
-                [ '_example.com', false ],
-                [ '0_example.com', false ],
-                [ '-example.com', false ],
-                [ '0-example.com', true ],
-                [ 'example-one.com', true ],
-                [ 'example-111.com', true ],
-                [ 'Example-111.com', true ],
-                [ 'a name with spaces', false ],
-        ],
-        UInt32BE: [
-                [ 'hello', false ],
-                [ '12345', true ],
-                [ 4294967296, false ],
-                [ 10, true ]
-        ],
-        UInt16BE: [
-                [ 'hello', false ],
-                [ '12345', true ],
-                [ 65536, false ],
-                [ 10, true ]
-        ],
-        nsText: [
-                [ 'hello world', true ],
-        ]
+const toTest = {
+  nsName: [
+    [ 'example.com', true ],
+    [ '0example.com', true ],
+    [ '_example.com', false ],
+    [ '0_example.com', false ],
+    [ '-example.com', false ],
+    [ '0-example.com', true ],
+    [ 'example-one.com', true ],
+    [ 'example-111.com', true ],
+    [ 'Example-111.com', true ],
+    [ 'a name with spaces', false ],
+    [ 'a'.repeat(64) + '.com', false ],
+    [ 12345, false ]
+  ],
+  UInt32BE: [
+    [ 'hello', false ],
+    [ '12345', false ],
+    [ 4294967296, false ],
+    [ 4294967295, true ],
+    [ -1, false ],
+    [ 1.5, false ],
+    [ NaN, false ],
+    [ 0, true ],
+    [ 10, true ]
+  ],
+  UInt16BE: [
+    [ 'hello', false ],
+    [ '12345', false ],
+    [ 65536, false ],
+    [ 65535, true ],
+    [ -1, false ],
+    [ 1.5, false ],
+    [ 0, true ],
+    [ 10, true ]
+  ],
+  nsText: [
+    [ 'hello world', true ],
+    [ '', true ],
+    [ 'a'.repeat(255), true ],
+    [ 'a'.repeat(256), false ],
+    [ 12345, false ]
+  ],
+  IPv4: [
+    [ '127.0.0.1', true ],
+    [ '256.0.0.1', false ],
+    [ '::1', false ]
+  ],
+  IPv6: [
+    [ '::1', true ],
+    [ '2001:db8::1', true ],
+    [ '127.0.0.1', false ]
+  ]
 };
 
-test('testing validator (nsName)', function(t) {
-        var k = 'nsName';
-        for (var i in toTest.k) {
-                var s = toTest.k[i][0];
-                var ok = toTest.k[i][1];
-                var result = validators.k(s);
-                t.equal(result, ok);
-        }
-        t.end();
-});
+for (const name of Object.keys(toTest)) {
+  test('testing validator (' + name + ')', () => {
+    for (const [value, expected] of toTest[name]) {
+      assert.equal(validators[name](value), expected,
+                   name + '(' + JSON.stringify(value) + ')');
+    }
+  });
+}
 
-test('testing validator (UInt32BE)', function(t) {
-        var k = 'UInt32BE';
-        for (var i in toTest.k) {
-                var s = toTest.k[i][0];
-                var ok = toTest.k[i][1];
-                var result = validators.k(s);
-                t.equal(result, ok);
-        }
-        t.end();
-});
-
-test('testing validator (UInt16BE)', function(t) {
-        var k = 'UInt16BE';
-        for (var i in toTest.k) {
-                var s = toTest.k[i][0];
-                var ok = toTest.k[i][1];
-                var result = validators.k(s);
-                t.equal(result, ok);
-        }
-        t.end();
-});
-
-test('testing validator (nsText)', function(t) {
-        var k = 'nsText';
-        for (var i in toTest.k) {
-                var s = toTest.k[i][0];
-                var ok = toTest.k[i][1];
-                var result = validators.k(s);
-                t.equal(result, ok);
-        }
-        t.end();
+test('testing validator (validate)', () => {
+  const model = { a: validators.UInt16BE, b: validators.nsName };
+  assert.equal(validators.validate({ a: 1, b: 'example.com' }, model), true);
+  assert.equal(validators.validate({ a: -1, b: 'example.com' }, model), false);
+  assert.equal(validators.validate({ a: 1, b: '' }, model), false);
+  assert.equal(validators.validate({ a: 1 }, model), false);
 });

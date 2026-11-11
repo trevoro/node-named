@@ -8,6 +8,20 @@ functionality that is in use today.
 
 
 
+## Requirements
+
+Node.js 20 or newer.
+
+## Testing
+
+```
+npm install
+npm test
+```
+
+The tests use the test runner that is built into Node.js, and query a running
+server with the `dns` resolver of Node.js, so no other tools are needed.
+
 ## Creating a DNS Server
 ```javascript
 var named = require('./lib/index');
@@ -85,3 +99,7 @@ basis).
 
 There are a few handy ways to lookup DNS records in node.
 https://github.com/LCMApps/dns-lookup-cache
+
+## Release notes
+
+See [RELEASE.md](RELEASE.md) for what changed in 2.0.0.
