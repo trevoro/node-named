@@ -99,3 +99,7 @@ basis).
 
 There are a few handy ways to lookup DNS records in node.
 https://github.com/LCMApps/dns-lookup-cache
+
+## Release notes
+
+See [RELEASE.md](RELEASE.md) for what changed in 2.0.0.
